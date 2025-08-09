@@ -3,7 +3,7 @@
 This repository is a monorepo containing three Matplotlib style packages:
 
 - `packages/minimalist`: A minimalist Matplotlib style with base and science variants plus curated color palettes.
-- `packages/minimalist_rdbu`: A minimalist style tailored to the RdBu color scheme with CMU Sans Serif font option.
+- `packages/minimalist/legacy/minimalist_rdbu`: Older minimalist RdBu variant preserved as a legacy subpackage.
 - `packages/scienceplots`: Third-party SciencePlots package vendored for convenience.
 
 ### Quick Start (development install)
@@ -12,7 +12,8 @@ From the repo root, install any package in editable mode:
 
 ```bash
 pip install -e packages/minimalist
-pip install -e packages/minimalist_rdbu
+# Legacy package (optional)
+pip install -e packages/minimalist/legacy/minimalist_rdbu
 pip install -e packages/scienceplots
 ```
 

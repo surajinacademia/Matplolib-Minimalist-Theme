@@ -9,6 +9,8 @@ It also includes custom color palettes for scientific visualization.
 """
 
 import os
+from os import listdir
+from os.path import isdir, join
 import matplotlib.pyplot as plt
 from matplotlib.ticker import AutoMinorLocator
 from matplotlib.colors import ListedColormap
@@ -91,6 +93,23 @@ def use_style(style_names):
         style_paths.append(style_file)
         
     plt.style.use(style_paths)
+
+# Register included styles in the matplotlib style library (like SciencePlots)
+try:
+    package_path = __path__[0]  # type: ignore[name-defined]
+    styles_path = join(package_path, 'styles')
+    if os.path.isdir(styles_path):
+        stylesheets = plt.style.core.read_style_directory(styles_path)
+        for inode in listdir(styles_path):
+            new_data_path = join(styles_path, inode)
+            if isdir(new_data_path):
+                new_stylesheets = plt.style.core.read_style_directory(new_data_path)
+                stylesheets.update(new_stylesheets)
+        plt.style.core.update_nested_dict(plt.style.library, stylesheets)
+        plt.style.core.available[:] = sorted(plt.style.library.keys())
+except Exception:
+    # Non-fatal: if registration fails, users can still call use_style()
+    pass
 
 def apply_minor_ticks(ax):
     """
