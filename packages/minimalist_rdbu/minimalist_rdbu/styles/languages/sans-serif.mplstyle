@@ -1,0 +1,15 @@
+# CMU Sans Serif font settings for presentations
+
+# Font settings
+font.family: sans-serif
+font.sans-serif: CMU Sans Serif, DejaVu Sans, Bitstream Vera Sans, Computer Modern Sans Serif, Arial, Lucida Grande, Verdana, Geneva, Lucid, Helvetica, Avant Garde, sans-serif
+
+text.usetex: True
+text.latex.preamble : \usepackage{amsmath} \usepackage{amssymb} \usepackage{sfmath}
+
+# Font sizes
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 10
+ytick.labelsize: 10
+legend.fontsize: 10 

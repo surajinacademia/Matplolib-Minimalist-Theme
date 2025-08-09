@@ -1,0 +1,4 @@
+# RdBuYe qualitative color palette
+# Prussian blue, cerulean, light blue, gamboge, auburn
+
+axes.prop_cycle: cycler('color', ['012a4a', '2c7da0', 'a9d6e5', 'ee9b00', '9b2226']) 

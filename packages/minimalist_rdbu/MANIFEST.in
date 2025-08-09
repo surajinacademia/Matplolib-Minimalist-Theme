@@ -1,0 +1,5 @@
+include README.md
+include MANIFEST.in
+recursive-include minimalist_rdbu/styles *.mplstyle
+recursive-include examples *.py *.pdf
+exclude .gitignore 

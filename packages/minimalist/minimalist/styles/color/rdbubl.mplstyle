@@ -1,0 +1,4 @@
+# RdBuBl qualitative color palette
+# Blue to red with black and grays in between
+
+axes.prop_cycle: cycler('color', ['053061', '2166ac', '4393c3', '000000', '808080', 'CCCCCC', 'd6604d', 'b2182b', '67001f']) 

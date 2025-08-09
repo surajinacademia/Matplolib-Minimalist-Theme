@@ -1,0 +1,53 @@
+# Minimalist base style without LaTeX and tick marks
+# Default style for everyday use
+
+# Figure properties
+figure.figsize: 6, 4
+figure.dpi: 300
+savefig.dpi: 300
+savefig.format: pdf
+savefig.bbox: tight
+savefig.transparent: True
+
+# Line widths
+axes.linewidth: 0.8
+
+# Tick settings - disable all ticks
+xtick.minor.visible: False
+ytick.minor.visible: False
+xtick.major.size: 0
+ytick.major.size: 0
+xtick.top: False
+ytick.right: False
+
+# Legend settings
+legend.frameon: False
+legend.numpoints: 1
+legend.scatterpoints: 1
+
+# Axes properties - only bottom and left spines
+axes.spines.top: False
+axes.spines.right: False
+axes.spines.bottom: True
+axes.spines.left: True
+
+# Line properties
+lines.linewidth: 1.5
+lines.markersize: 6
+
+# Font settings - no LaTeX but enable mathtext for Greek letters
+text.usetex: False
+mathtext.fontset: cm
+font.family: sans-serif
+font.sans-serif: CMU Sans Serif
+mathtext.fontset: cm
+
+# Font sizes
+font.size: 12
+axes.labelsize: 12
+xtick.labelsize: 10
+ytick.labelsize: 10
+legend.fontsize: 10
+
+# Default color cycle using RdBuYe_q palette
+axes.prop_cycle: cycler('color', ['012a4a', '2c7da0', 'a9d6e5', 'ee9b00', '9b2226']) 
