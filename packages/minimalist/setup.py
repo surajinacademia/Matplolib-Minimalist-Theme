@@ -18,8 +18,7 @@ setup(
     packages=find_packages(),
     package_data={
         'minimalist': [
-            'styles/*.mplstyle',
-            'styles/*/*.mplstyle'
+            'styles/**/*.mplstyle',
         ],
     },
     include_package_data=True,

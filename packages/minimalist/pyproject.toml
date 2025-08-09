@@ -51,3 +51,8 @@ examples = [
 "Bug Reports" = "https://github.com/surajsahu/minimalist/issues"
 "Source" = "https://github.com/surajsahu/minimalist"
 "Documentation" = "https://github.com/surajsahu/minimalist/blob/main/README.md" 
+
+[tool.setuptools.package-data]
+minimalist = [
+  "styles/**/*.mplstyle",
+]
