@@ -19,10 +19,10 @@ pip install minimalist[latex]
 
 ```python
 import matplotlib.pyplot as plt
-import minimalist
+import minimalist  # registers bundled styles on import
 
 # Use the base style (default for everyday use)
-minimalist.use_style('base')
+plt.style.use('base')  # or minimalist.use_style('base')
 
 # Create your plots with Greek letters support
 plt.plot([1, 2, 3], [1, 4, 9], label=r'$\alpha$ data')
