@@ -1,11 +1,11 @@
 # Minimalist RdBu
 
-A clean, minimalist matplotlib style for scientific presentations featuring CMU Sans Serif font and a carefully selected RdBu color palette.
+A minimalist Matplotlib style for scientific presentations featuring a carefully curated RdBu color palette and optional CMU Sans Serif font.
 
 ## Features
 
 - Clean, minimalist design optimized for presentations
-- Professional CMU Sans Serif font with LaTeX integration
+- Optional CMU Sans Serif font with LaTeX integration
 - Carefully selected RdBu color palette
 - Removed chartjunk (no top and right spines, no grid)
 - Optimized for PDF output
@@ -13,13 +13,13 @@ A clean, minimalist matplotlib style for scientific presentations featuring CMU 
 ## Installation
 
 ```bash
-# First, ensure you have TeX Live installed for the CMU Sans Serif font
+# Optional: for CMU Sans Serif font with LaTeX
 # macOS: brew install --cask mactex
 # Ubuntu: sudo apt-get install texlive-full
 # Windows: Install MiKTeX
 
-# Then install the package
-pip install .
+# Development install
+pip install -e .
 ```
 
 ## Requirements
@@ -35,7 +35,7 @@ The package provides three style components that can be used individually or com
 ```python
 import minimalist_rdbu
 
-# Use all styles (default)
+# Use all styles (default: base + rdbu + sans-serif)
 minimalist_rdbu.use_style('all')
 
 # Or use individual components
@@ -71,23 +71,3 @@ MIT License
 ## Author
 
 Suraj Sahu 
-
-
-
-
-
-
-
-
-# Things to do
-
-@minimalist_rdbu okay we need to update this package and make a drastic reorganization, update the information and change styles.
-
-Here are the things I want
-
-1. The color maps I want to use are:
-   - RdBu:
-
-2. Fonts to use:
-   - Text fonts: Sans-Serif Computer Modern
-   - Math fonts: 
