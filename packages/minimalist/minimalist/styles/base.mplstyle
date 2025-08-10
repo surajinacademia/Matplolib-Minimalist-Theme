@@ -40,7 +40,6 @@ text.usetex: False
 mathtext.fontset: cm
 font.family: sans-serif
 font.sans-serif: CMU Sans Serif
-mathtext.fontset: cm
 
 # Font sizes
 font.size: 12
@@ -48,6 +47,8 @@ axes.labelsize: 12
 xtick.labelsize: 10
 ytick.labelsize: 10
 legend.fontsize: 10
+
+axes.unicode_minus: False
 
 # Default color cycle using RdBuYe_q palette
 axes.prop_cycle: cycler('color', ['012a4a', '2c7da0', 'a9d6e5', 'ee9b00', '9b2226']) 

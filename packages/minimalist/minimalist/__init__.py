@@ -59,6 +59,42 @@ def get_cmap(name):
     palette = get_palette(name)
     return ListedColormap(palette)
 
+def setup_latex_path():
+    """
+    Setup LaTeX path for matplotlib to find the correct TeX installation.
+    """
+    import subprocess
+    
+    # Common TeX installation paths on macOS
+    tex_paths = [
+        "/Library/TeX/texbin",  # macOS TeX Live
+        "/usr/local/texlive/2025/bin/x86_64-darwin",  # TeX Live 2025
+        "/usr/local/texlive/2024/bin/x86_64-darwin",  # TeX Live 2024
+        "/usr/local/texlive/2023/bin/x86_64-darwin",  # TeX Live 2023
+        "/usr/texbin",  # Legacy macOS TeX
+    ]
+    
+    # Find the correct LaTeX path
+    latex_path = None
+    for path in tex_paths:
+        if os.path.exists(path):
+            latex_path = path
+            break
+    
+    if latex_path:
+        # Add to PATH for subprocess calls
+        if latex_path not in os.environ.get('PATH', ''):
+            os.environ['PATH'] = latex_path + ':' + os.environ.get('PATH', '')
+        
+        # Configure matplotlib's texmanager to use the correct LaTeX executable
+        try:
+            from matplotlib import texmanager
+            texmanager.TexManager.latex = os.path.join(latex_path, 'latex')
+            texmanager.TexManager.dvipng = os.path.join(latex_path, 'dvipng')
+            texmanager.TexManager.ghostscript = os.path.join(latex_path, 'gs')
+        except:
+            pass  # Non-fatal if texmanager configuration fails
+
 def use_style(style_names):
     """
     Apply a minimalist style or styles to matplotlib.
@@ -76,6 +112,10 @@ def use_style(style_names):
     """
     if isinstance(style_names, str):
         style_names = [style_names]
+    
+    # Setup LaTeX path if using science style
+    if 'science' in style_names:
+        setup_latex_path()
         
     style_paths = []
     for style_name in style_names:
@@ -126,6 +166,7 @@ def apply_minor_ticks(ax):
 # Convenience imports
 __all__ = [
     'use_style',
+    'setup_latex_path',
     'get_palette', 
     'get_cmap',
     'apply_minor_ticks',

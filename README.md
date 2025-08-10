@@ -17,6 +17,12 @@ pip install -e packages/minimalist/legacy/minimalist_rdbu
 pip install -e packages/scienceplots
 ```
 
+### What's configured by default
+- CMU Sans Serif is the default font for both base and science styles (no manual font setup needed)
+- Science style enables LaTeX and will auto-detect a TeX installation on macOS (e.g., `/Library/TeX/texbin`)
+- Base style uses MathText (no LaTeX) for Greek letters
+- Minus sign warnings are suppressed via `axes.unicode_minus: False`
+
 ### Usage
 
 - Minimalist (everyday plots, no LaTeX):
@@ -31,16 +37,18 @@ plt.show()
 
 - Minimalist (publication style with LaTeX):
 ```python
-minimalist.use_style(['science', 'sans-serif'])
+import minimalist
+minimalist.use_style('science')
 ```
 
-- Minimalist RdBu:
+- Minimalist with RdBu color cycles:
 ```python
-import minimalist_rdbu
-minimalist_rdbu.use_style('all')  # base + RdBu colors + CMU Sans Serif
+import minimalist
+minimalist.use_style(['base', 'rdbuye'])   # 5-color cycle
+minimalist.use_style(['base', 'rdbubl'])   # 9-color cycle
 ```
 
-- SciencePlots:
+- SciencePlots (vendored example set):
 ```python
 import matplotlib.pyplot as plt
 import scienceplots
