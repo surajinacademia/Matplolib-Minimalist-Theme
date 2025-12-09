@@ -1,6 +1,6 @@
 # Minimalist science style
 # Clean scientific style with tick marks for publications
-# Uses CMU Sans Serif font and Computer Modern math (no TeX required)
+# Uses CMU Sans Serif font with DejaVu Sans mathtext fallback
 
 # =============================================================================
 # Figure
@@ -16,8 +16,11 @@ savefig.transparent: True
 # Font
 # =============================================================================
 text.usetex: False
-font.family: CMU Sans Serif
-mathtext.fontset: cm
+font.family: sans-serif
+font.sans-serif: CMU Sans Serif, DejaVu Sans
+mathtext.fontset: dejavusans
+mathtext.default: regular
+axes.unicode_minus: False
 
 # =============================================================================
 # Axes

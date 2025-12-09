@@ -6,12 +6,22 @@ This script demonstrates the two styles available in the minimalist package:
 - science: Clean scientific style with tick marks
 - base: Minimal style without tick marks
 
-Both styles use CMU Sans Serif font and Computer Modern math (no TeX required).
+Both styles use CMU Sans Serif font with DejaVu Sans for mathtext.
 """
 
+import os
+import warnings
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.ticker import LogFormatterSciNotation, ScalarFormatter
 import minimalist
+
+# Suppress the font glyph warnings
+warnings.filterwarnings('ignore', message='.*Glyph.*missing.*')
+warnings.filterwarnings('ignore', message='.*does not have a glyph.*')
+
+# Create plots directory
+os.makedirs('plots', exist_ok=True)
 
 print(f"Minimalist v{minimalist.__version__}")
 print(f"Figure widths: FW={minimalist.FW:.2f}, FW_2={minimalist.FW_2:.2f}, FW_3={minimalist.FW_3:.2f}")
@@ -43,8 +53,9 @@ ax.set_title('Science Style')
 ax.legend(loc='upper right')
 
 plt.tight_layout()
-plt.savefig('demo_science.pdf')
-print("  Saved: demo_science.pdf")
+plt.savefig('plots/demo_science.pdf')
+print("  Saved: plots/demo_science.pdf")
+plt.close()
 
 
 # =============================================================================
@@ -68,8 +79,9 @@ ax.set_title('Base Style (no ticks)')
 ax.legend(loc='upper right')
 
 plt.tight_layout()
-plt.savefig('demo_base.pdf')
-print("  Saved: demo_base.pdf")
+plt.savefig('plots/demo_base.pdf')
+print("  Saved: plots/demo_base.pdf")
+plt.close()
 
 
 # =============================================================================
@@ -92,8 +104,9 @@ ax.set_title('Color Palette (6 colors)')
 ax.legend(loc='upper right', ncol=2, fontsize=6)
 
 plt.tight_layout()
-plt.savefig('demo_colors.pdf')
-print("  Saved: demo_colors.pdf")
+plt.savefig('plots/demo_colors.pdf')
+print("  Saved: plots/demo_colors.pdf")
+plt.close()
 
 
 # =============================================================================
@@ -126,8 +139,9 @@ ax2.set_yticks([])
 plt.colorbar(im2, ax=ax2, shrink=0.8)
 
 plt.tight_layout()
-plt.savefig('demo_heatmap.pdf')
-print("  Saved: demo_heatmap.pdf")
+plt.savefig('plots/demo_heatmap.pdf')
+print("  Saved: plots/demo_heatmap.pdf")
+plt.close()
 
 
 # =============================================================================
@@ -155,14 +169,48 @@ ax.set_title('Math Notation (mathtext)')
 ax.legend(loc='lower right')
 
 plt.tight_layout()
-plt.savefig('demo_math.pdf')
-print("  Saved: demo_math.pdf")
+plt.savefig('plots/demo_math.pdf')
+print("  Saved: plots/demo_math.pdf")
+plt.close()
 
 
 # =============================================================================
-# Demo 6: Scatter Plot
+# Demo 6: Log Scale
 # =============================================================================
-print("Demo 6: Scatter plot...")
+print("Demo 6: Log scale plots...")
+
+minimalist.use_style('science')
+
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(minimalist.FW, minimalist.FW_3))
+
+# Left: semi-log y
+x = np.linspace(0, 5, 100)
+for i in range(4):
+    ax1.semilogy(x, np.exp(-(i+1)*x), label=rf'$e^{{-{i+1}x}}$')
+ax1.set_xlabel(r'$x$')
+ax1.set_ylabel(r'$y$')
+ax1.set_title('Semilogy')
+ax1.legend(fontsize=6)
+
+# Right: log-log
+x = np.logspace(-1, 2, 100)
+for i in range(4):
+    ax2.loglog(x, x**(-(i+1)/2), label=rf'$x^{{-{i+1}/2}}$')
+ax2.set_xlabel(r'$x$')
+ax2.set_ylabel(r'$y$')
+ax2.set_title('Log-log')
+ax2.legend(fontsize=6)
+
+plt.tight_layout()
+plt.savefig('plots/demo_logscale.pdf')
+print("  Saved: plots/demo_logscale.pdf")
+plt.close()
+
+
+# =============================================================================
+# Demo 7: Scatter Plot
+# =============================================================================
+print("Demo 7: Scatter plot...")
 
 minimalist.use_style('science')
 
@@ -180,14 +228,15 @@ ax.set_title('Scatter Plot')
 ax.legend(loc='upper left', fontsize=6, ncol=2)
 
 plt.tight_layout()
-plt.savefig('demo_scatter.pdf')
-print("  Saved: demo_scatter.pdf")
+plt.savefig('plots/demo_scatter.pdf')
+print("  Saved: plots/demo_scatter.pdf")
+plt.close()
 
 
 # =============================================================================
-# Demo 7: Side-by-Side Style Comparison
+# Demo 8: Side-by-Side Style Comparison
 # =============================================================================
-print("Demo 7: Side-by-side style comparison...")
+print("Demo 8: Side-by-side style comparison...")
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(minimalist.FW, minimalist.FW_3))
 
@@ -210,8 +259,9 @@ ax2.set_title('Base')
 ax2.tick_params(axis='both', which='major', length=0)
 
 plt.tight_layout()
-plt.savefig('demo_comparison.pdf')
-print("  Saved: demo_comparison.pdf")
+plt.savefig('plots/demo_comparison.pdf')
+print("  Saved: plots/demo_comparison.pdf")
+plt.close()
 
 
 # =============================================================================
@@ -222,12 +272,13 @@ print("=" * 60)
 print("Demo complete!")
 print("=" * 60)
 print()
-print("Generated files:")
+print("Generated files in plots/:")
 print("  - demo_science.pdf    : Science style")
 print("  - demo_base.pdf       : Base style (no ticks)")
 print("  - demo_colors.pdf     : All 6 colors")
 print("  - demo_heatmap.pdf    : Continuous colormap")
 print("  - demo_math.pdf       : Math notation")
+print("  - demo_logscale.pdf   : Log scale plots")
 print("  - demo_scatter.pdf    : Scatter plot")
 print("  - demo_comparison.pdf : Style comparison")
 print()
