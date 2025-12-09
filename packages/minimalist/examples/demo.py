@@ -1,7 +1,7 @@
 """
 Demo script for the minimalist matplotlib style package
-Base style: Default for everyday use
-Science style: For publications only
+Base style: Minimal style without tick marks
+Science style: Clean scientific style with tick marks
 """
 
 import numpy as np
@@ -12,71 +12,52 @@ import minimalist
 import os
 os.makedirs('plots', exist_ok=True)
 
-# Example 1: Base style (default) with Greek letters
-minimalist.use_style('base')
+# Example 1: Science style with line plots
+minimalist.use_style('science')
 
 x = np.linspace(0, 2*np.pi, 100)
-fig, ax = plt.subplots()
-for i in range(5):
-    ax.plot(x, np.sin(x + i*np.pi/5), label=r'$\sin(x + %d\pi/5)$' % i)
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+for i in range(6):
+    ax.plot(x, np.sin(x + i*np.pi/6), label=f'Phase {i}')
 ax.set_xlabel(r'$x$ [radians]')
-ax.set_ylabel(r'$\alpha$')
+ax.set_ylabel(r'$\sin(x)$')
 ax.legend()
-ax.set_title('Base Style (Default) with Greek Letters')
-plt.savefig('plots/base_default.pdf')
+plt.savefig('plots/science_style.pdf')
 plt.show()
 
-# Example 2: Base style with RdBuBl colors (9 lines)
-minimalist.use_style(['base', 'rdbubl'])
+# Example 2: Base style (minimal, no ticks)
+minimalist.use_style('base')
 
-fig, ax = plt.subplots()
-for i in range(9):
-    ax.plot(x, np.sin(x + i*np.pi/9), label=r'$\sin(x + %d\pi/9)$' % i)
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+for i in range(6):
+    ax.plot(x, np.cos(x + i*np.pi/6), label=f'Phase {i}')
 ax.set_xlabel(r'$\theta$ [radians]')
-ax.set_ylabel(r'$\phi(\theta)$')
-ax.legend(ncol=3, fontsize=9)
-ax.set_title('Base Style with RdBuBl Colors (9 lines)')
-plt.savefig('plots/base_rdbubl.pdf')
+ax.set_ylabel(r'$\cos(\theta)$')
+ax.legend()
+plt.savefig('plots/base_style.pdf')
 plt.show()
 
-# Example 3: Smooth heatmap
-from matplotlib.colors import LinearSegmentedColormap
+# Example 3: Heatmap with continuous colormap
+minimalist.use_style('science')
 
-# Create smooth heatmap data
 x_grid = np.linspace(-3, 3, 50)
 y_grid = np.linspace(-3, 3, 50)
 X, Y = np.meshgrid(x_grid, y_grid)
 data = np.sin(X) * np.cos(Y)
 
-# Get colormap
-rdbu_w_colors = minimalist.get_palette('Rdbu_w')
-rdbu_w_cmap = LinearSegmentedColormap.from_list('rdbu_w', rdbu_w_colors)
-
-fig, ax = plt.subplots()
-im = ax.imshow(data, cmap=rdbu_w_cmap, aspect='auto', interpolation='bilinear')
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_2))
+im = ax.imshow(data, cmap='minimalist', aspect='auto', interpolation='bilinear')
 plt.colorbar(im)
-ax.set_title('Smooth Heatmap with Rdbu_w Colormap')
+ax.set_title('Heatmap with Minimalist Colormap')
 ax.set_xticks([])
 ax.set_yticks([])
-plt.savefig('plots/heatmap_rdbu_w.pdf')
-plt.show()
-
-# Example 4: Science style for publications only
-minimalist.use_style('science')
-fig, ax = plt.subplots()
-for i in range(5):
-    ax.plot(x, np.cos(x + i*np.pi/5), label=r'$\cos(x + %d\pi/5)$' % i)
-ax.set_xlabel(r'$x$ [radians]')
-ax.set_ylabel(r'$\beta$')
-ax.legend()
-ax.set_title('Science Style (Publications)')
-plt.savefig('plots/science_publication.pdf')
+plt.savefig('plots/heatmap_minimalist.pdf')
 plt.show()
 
 print("\nAll plots saved to 'plots/' directory")
-print("\nColor palettes available:")
-colors = minimalist.get_palette('RdBuYe_q')
-print(f"RdBuYe_q colors: {colors}")
-print("\nStyle Usage:")
-print("- Base: Default style for everyday use (no LaTeX, mathtext for Greek letters)")
-print("- Science: For publications only (full LaTeX support)") 
+print(f"\nFigure widths: FW={minimalist.FW:.2f}, FW_2={minimalist.FW_2:.2f}, FW_3={minimalist.FW_3:.2f}")
+print(f"Base colors: {minimalist.BASE_COLORS}")
+print("\nUsage:")
+print("  minimalist.use_style('science')  # With tick marks")
+print("  minimalist.use_style('base')     # Minimal, no ticks")
+print("  cmap='minimalist'                # Continuous colormap for heatmaps")
