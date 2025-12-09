@@ -55,7 +55,7 @@ ax.legend(loc='upper right')
 plt.tight_layout()
 plt.savefig('plots/demo_science.pdf')
 print("  Saved: plots/demo_science.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -81,7 +81,7 @@ ax.legend(loc='upper right')
 plt.tight_layout()
 plt.savefig('plots/demo_base.pdf')
 print("  Saved: plots/demo_base.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -106,7 +106,7 @@ ax.legend(loc='upper right', ncol=2, fontsize=6)
 plt.tight_layout()
 plt.savefig('plots/demo_colors.pdf')
 print("  Saved: plots/demo_colors.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -141,7 +141,7 @@ plt.colorbar(im2, ax=ax2, shrink=0.8)
 plt.tight_layout()
 plt.savefig('plots/demo_heatmap.pdf')
 print("  Saved: plots/demo_heatmap.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -171,7 +171,7 @@ ax.legend(loc='lower right')
 plt.tight_layout()
 plt.savefig('plots/demo_math.pdf')
 print("  Saved: plots/demo_math.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -204,7 +204,7 @@ ax2.legend(fontsize=6)
 plt.tight_layout()
 plt.savefig('plots/demo_logscale.pdf')
 print("  Saved: plots/demo_logscale.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -230,7 +230,7 @@ ax.legend(loc='upper left', fontsize=6, ncol=2)
 plt.tight_layout()
 plt.savefig('plots/demo_scatter.pdf')
 print("  Saved: plots/demo_scatter.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
@@ -261,7 +261,7 @@ ax2.tick_params(axis='both', which='major', length=0)
 plt.tight_layout()
 plt.savefig('plots/demo_comparison.pdf')
 print("  Saved: plots/demo_comparison.pdf")
-plt.close()
+plt.show()
 
 
 # =============================================================================
