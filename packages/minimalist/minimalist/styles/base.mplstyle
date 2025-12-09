@@ -1,30 +1,32 @@
 # Minimalist base style
 # Minimal style without tick marks
-# Uses CMU Sans Serif font with Computer Modern math
+# Uses CMU Sans Serif font with STIX math (complete Unicode support)
 
 # =============================================================================
 # Figure
 # =============================================================================
 figure.figsize: 3.53, 2.36
 figure.dpi: 300
+figure.facecolor: white
 savefig.dpi: 300
 savefig.format: pdf
 savefig.bbox: tight
-savefig.transparent: True
+savefig.facecolor: white
 
 # =============================================================================
 # Font
 # =============================================================================
 text.usetex: False
 font.family: CMU Sans Serif
-mathtext.fontset: cm
+mathtext.fontset: stix
+mathtext.default: regular
 axes.unicode_minus: False
 
 # =============================================================================
 # Axes
 # =============================================================================
 axes.linewidth: 0.5
-axes.facecolor: none
+axes.facecolor: white
 axes.spines.top: False
 axes.spines.right: False
 axes.spines.bottom: True

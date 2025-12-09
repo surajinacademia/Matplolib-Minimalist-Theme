@@ -16,10 +16,7 @@ import matplotlib.pyplot as plt
 from matplotlib.ticker import LogFormatterSciNotation, ScalarFormatter
 import minimalist
 
-# Suppress the font glyph warnings
-warnings.filterwarnings('ignore', message='.*Glyph.*missing.*')
-warnings.filterwarnings('ignore', message='.*does not have a glyph.*')
-
+ 
 # Create plots directory
 os.makedirs('plots', exist_ok=True)
 
@@ -191,6 +188,8 @@ ax1.set_xlabel(r'$x$')
 ax1.set_ylabel(r'$y$')
 ax1.set_title('Semilogy')
 ax1.legend(fontsize=6)
+# Use ScalarFormatter to avoid mathtext minus sign issue
+ax1.yaxis.set_major_formatter(ScalarFormatter())
 
 # Right: log-log
 x = np.logspace(-1, 2, 100)
@@ -200,6 +199,9 @@ ax2.set_xlabel(r'$x$')
 ax2.set_ylabel(r'$y$')
 ax2.set_title('Log-log')
 ax2.legend(fontsize=6)
+# Use ScalarFormatter to avoid mathtext minus sign issue
+ax2.xaxis.set_major_formatter(ScalarFormatter())
+ax2.yaxis.set_major_formatter(ScalarFormatter())
 
 plt.tight_layout()
 plt.savefig('plots/demo_logscale.pdf')
