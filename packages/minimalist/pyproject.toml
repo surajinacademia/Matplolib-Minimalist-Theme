@@ -1,20 +1,26 @@
 [build-system]
-requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "minimalist"
-version = "0.2.0"
-description = "A minimalist matplotlib style package for scientific presentations with custom color palettes"
+version = "1.0.0"
+description = "A clean matplotlib style package for scientific figures"
 readme = "README.md"
-requires-python = ">=3.8"
 license = {text = "MIT"}
+requires-python = ">=3.8"
 authors = [
-    {name = "Suraj Sahu", email = "suraj.sahu@example.com"},
+    {name = "Suraj Sahu"},
 ]
-keywords = ["matplotlib", "plotting", "scientific", "visualization", "style", "LaTeX"]
+keywords = [
+    "matplotlib",
+    "plotting",
+    "scientific",
+    "visualization",
+    "style",
+]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -22,8 +28,9 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Scientific/Engineering :: Visualization",
-    "Topic :: Scientific/Engineering",
 ]
 dependencies = [
     "matplotlib>=3.5.0",
@@ -31,28 +38,27 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-latex = [
-    "dvipng",
-    "ghostscript",
-]
 dev = [
     "pytest>=6.0",
-    "pytest-cov",
-    "flake8",
     "black",
-]
-examples = [
-    "jupyter",
-    "pandas",
-    "seaborn",
+    "ruff",
 ]
 
 [project.urls]
-"Bug Reports" = "https://github.com/surajsahu/minimalist/issues"
-"Source" = "https://github.com/surajsahu/minimalist"
-"Documentation" = "https://github.com/surajsahu/minimalist/blob/main/README.md" 
+Homepage = "https://github.com/surajinacademia/Matplolib-Minimalist-Theme"
+Repository = "https://github.com/surajinacademia/Matplolib-Minimalist-Theme"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["minimalist*"]
 
 [tool.setuptools.package-data]
-minimalist = [
-  "styles/**/*.mplstyle",
-]
+minimalist = ["styles/*.mplstyle"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py38"

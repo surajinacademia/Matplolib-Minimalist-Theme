@@ -1,171 +1,114 @@
 """
-A minimalist matplotlib style package for scientific presentations.
+Minimalist - A clean matplotlib style package for scientific figures.
 
-This package provides two main styles:
-- science: Clean scientific style with small tick marks
+This package provides two styles:
+- science: Clean scientific style with tick marks
 - base: Minimal style without tick marks
 
-It also includes custom color palettes and a continuous colormap for heatmaps.
+Both styles use CMU Sans Serif font and Computer Modern for math notation.
+No LaTeX/TeX required - uses matplotlib's mathtext for Greek letters and equations.
+
+Usage:
+    import minimalist
+    minimalist.use_style('science')
+    
+    # Use figure width constants based on standard text width
+    fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+    
+    # Use the continuous colormap for heatmaps
+    plt.imshow(data, cmap='minimalist')
 """
 
 import os
-from os import listdir
-from os.path import isdir, join
 import matplotlib.pyplot as plt
-from matplotlib.ticker import AutoMinorLocator
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
-from .colors import COLOR_PALETTES, BASE_COLORS, BASE_CMAP, BASE_CMAP_R
+from matplotlib.colors import LinearSegmentedColormap
 
-__version__ = "0.3.0"
+__version__ = "1.0.0"
+__author__ = "Suraj Sahu"
 
-# Figure width constants based on text_width = 510/72.27 inches
+# =============================================================================
+# Figure Width Constants
+# =============================================================================
+# Based on standard LaTeX article text width: 510pt = 7.06 inches
 TEXT_WIDTH = 510 / 72.27  # ~7.06 inches
+
 FW = TEXT_WIDTH           # Full width
 FW_2 = TEXT_WIDTH / 2     # Half width (~3.53 inches)
 FW_3 = TEXT_WIDTH / 3     # Third width (~2.36 inches)
 
+# =============================================================================
+# Color Palette
+# =============================================================================
+# Single color palette for quantitative plots
+BASE_COLORS = ['#AB3019', '#FE7002', '#F4B43E', '#86B4C4', '#00768C', '#003547']
 
-def get_palette(name='base'):
+# =============================================================================
+# Colormaps
+# =============================================================================
+# Continuous colormap for heatmaps (interpolated from BASE_COLORS)
+_BASE_CMAP = LinearSegmentedColormap.from_list('minimalist', BASE_COLORS)
+_BASE_CMAP_R = LinearSegmentedColormap.from_list('minimalist_r', BASE_COLORS[::-1])
+
+# Register colormaps with matplotlib
+try:
+    plt.colormaps.register(cmap=_BASE_CMAP, name='minimalist')
+    plt.colormaps.register(cmap=_BASE_CMAP_R, name='minimalist_r')
+except ValueError:
+    # Already registered
+    pass
+
+# =============================================================================
+# Style Functions
+# =============================================================================
+def use_style(style_name):
     """
-    Get a color palette by name.
+    Apply a minimalist style to matplotlib.
     
     Parameters
     ----------
-    name : str
-        Name of the color palette (default: 'base')
-        
-    Returns
-    -------
-    list
-        List of hex color codes
-        
-    Raises
-    ------
-    ValueError
-        If palette name is not found
+    style_name : str
+        Style to apply: 'science' or 'base'
+        - science: Clean style with tick marks (for publications)
+        - base: Minimal style without tick marks
+    
+    Examples
+    --------
+    >>> import minimalist
+    >>> minimalist.use_style('science')
     """
-    if name not in COLOR_PALETTES:
-        available = ', '.join(COLOR_PALETTES.keys())
-        raise ValueError(f"Unknown palette '{name}'. Available palettes: {available}")
-    return COLOR_PALETTES[name]
+    style_file = os.path.join(os.path.dirname(__file__), 'styles', f'{style_name}.mplstyle')
+    
+    if not os.path.exists(style_file):
+        raise ValueError(f"Unknown style '{style_name}'. Available: 'science', 'base'")
+    
+    plt.style.use(style_file)
 
 
 def get_cmap(name='minimalist'):
     """
-    Get a matplotlib colormap.
+    Get a colormap.
     
     Parameters
     ----------
     name : str
-        Name of the colormap ('minimalist' or 'minimalist_r')
-        
+        Colormap name: 'minimalist' or 'minimalist_r'
+    
     Returns
     -------
-    matplotlib.colors.LinearSegmentedColormap
-        Colormap object
+    LinearSegmentedColormap
+        The colormap object
+    
+    Examples
+    --------
+    >>> cmap = minimalist.get_cmap()
+    >>> plt.imshow(data, cmap=cmap)
     """
     if name == 'minimalist':
-        return BASE_CMAP
+        return _BASE_CMAP
     elif name == 'minimalist_r':
-        return BASE_CMAP_R
+        return _BASE_CMAP_R
     else:
-        # Fallback to matplotlib's built-in colormaps
         return plt.get_cmap(name)
-
-
-def setup_latex_path():
-    """
-    Setup LaTeX path for matplotlib to find the correct TeX installation.
-    """
-    import subprocess
-    
-    # Common TeX installation paths on macOS
-    tex_paths = [
-        "/Library/TeX/texbin",  # macOS TeX Live
-        "/usr/local/texlive/2025/bin/x86_64-darwin",  # TeX Live 2025
-        "/usr/local/texlive/2024/bin/x86_64-darwin",  # TeX Live 2024
-        "/usr/local/texlive/2023/bin/x86_64-darwin",  # TeX Live 2023
-        "/usr/texbin",  # Legacy macOS TeX
-    ]
-    
-    # Find the correct LaTeX path
-    latex_path = None
-    for path in tex_paths:
-        if os.path.exists(path):
-            latex_path = path
-            break
-    
-    if latex_path:
-        # Add to PATH for subprocess calls
-        if latex_path not in os.environ.get('PATH', ''):
-            os.environ['PATH'] = latex_path + ':' + os.environ.get('PATH', '')
-        
-        # Configure matplotlib's texmanager to use the correct LaTeX executable
-        try:
-            from matplotlib import texmanager
-            texmanager.TexManager.latex = os.path.join(latex_path, 'latex')
-            texmanager.TexManager.dvipng = os.path.join(latex_path, 'dvipng')
-            texmanager.TexManager.ghostscript = os.path.join(latex_path, 'gs')
-        except:
-            pass  # Non-fatal if texmanager configuration fails
-
-def use_style(style_names):
-    """
-    Apply a minimalist style or styles to matplotlib.
-    
-    Parameters
-    ----------
-    style_names : str or list of str
-        The style(s) to apply. Can be 'science' or 'base'.
-        
-    Raises
-    ------
-    ValueError
-        If a style_name is not recognized
-    """
-    if isinstance(style_names, str):
-        style_names = [style_names]
-    
-    # Setup LaTeX path if using science style
-    if 'science' in style_names:
-        setup_latex_path()
-        
-    style_paths = []
-    for style_name in style_names:
-        # Check in the base styles directory
-        style_file = os.path.join(os.path.dirname(__file__), 'styles', f'{style_name}.mplstyle')
-        if not os.path.exists(style_file):
-            raise ValueError(f"Unknown style '{style_name}'. Available styles: 'science', 'base'")
-        
-        style_paths.append(style_file)
-        
-    plt.style.use(style_paths)
-
-
-# Register included styles in the matplotlib style library
-try:
-    package_path = __path__[0]  # type: ignore[name-defined]
-    styles_path = join(package_path, 'styles')
-    if os.path.isdir(styles_path):
-        stylesheets = plt.style.core.read_style_directory(styles_path)
-        plt.style.core.update_nested_dict(plt.style.library, stylesheets)
-        plt.style.core.available[:] = sorted(plt.style.library.keys())
-except Exception:
-    # Non-fatal: if registration fails, users can still call use_style()
-    pass
-
-
-def apply_minor_ticks(ax):
-    """
-    Apply minor ticks to an axis.
-    
-    Parameters
-    ----------
-    ax : matplotlib.axes.Axes
-        The axis to apply minor ticks to
-    """
-    ax.xaxis.set_minor_locator(AutoMinorLocator())
-    ax.yaxis.set_minor_locator(AutoMinorLocator())
 
 
 def figsize(width_fraction=1, aspect_ratio=None):
@@ -177,12 +120,16 @@ def figsize(width_fraction=1, aspect_ratio=None):
     width_fraction : float
         Fraction of text width (default: 1 for full width)
     aspect_ratio : float, optional
-        Height/width ratio. If None, uses golden ratio (~0.618)
-        
+        Height/width ratio. Default: golden ratio (~0.618)
+    
     Returns
     -------
     tuple
         (width, height) in inches
+    
+    Examples
+    --------
+    >>> fig, ax = plt.subplots(figsize=minimalist.figsize(0.5))
     """
     if aspect_ratio is None:
         aspect_ratio = (5**0.5 - 1) / 2  # Golden ratio
@@ -191,20 +138,29 @@ def figsize(width_fraction=1, aspect_ratio=None):
     return (width, height)
 
 
-# Convenience imports
+# =============================================================================
+# Register styles with matplotlib
+# =============================================================================
+try:
+    _styles_path = os.path.join(os.path.dirname(__file__), 'styles')
+    if os.path.isdir(_styles_path):
+        _stylesheets = plt.style.core.read_style_directory(_styles_path)
+        plt.style.core.update_nested_dict(plt.style.library, _stylesheets)
+        plt.style.core.available[:] = sorted(plt.style.library.keys())
+except Exception:
+    pass
+
+
+# =============================================================================
+# Public API
+# =============================================================================
 __all__ = [
+    # Version
+    '__version__',
+    # Style
     'use_style',
-    'setup_latex_path',
-    'get_palette', 
-    'get_cmap',
-    'apply_minor_ticks',
-    'figsize',
-    'COLOR_PALETTES',
-    'BASE_COLORS',
-    'BASE_CMAP',
-    'BASE_CMAP_R',
-    'TEXT_WIDTH',
-    'FW',
-    'FW_2',
-    'FW_3',
+    # Figure sizing
+    'TEXT_WIDTH', 'FW', 'FW_2', 'FW_3', 'figsize',
+    # Colors
+    'BASE_COLORS', 'get_cmap',
 ]

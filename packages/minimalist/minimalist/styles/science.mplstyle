@@ -1,6 +1,10 @@
 # Minimalist science style
+# Clean scientific style with tick marks for publications
+# Uses DejaVu Sans as fallback for CMU Sans Serif, Computer Modern for math
 
-# Figure properties
+# =============================================================================
+# Figure
+# =============================================================================
 figure.figsize: 3.53, 2.36
 figure.dpi: 300
 savefig.dpi: 300
@@ -8,54 +12,68 @@ savefig.format: pdf
 savefig.bbox: tight
 savefig.transparent: True
 
-# Text/LaTeX settings
+# =============================================================================
+# Font (sans-serif with Computer Modern math)
+# =============================================================================
 text.usetex: False
-font.family: CMU Sans Serif
+font.family: sans-serif
+font.sans-serif: CMU Sans Serif, DejaVu Sans, Arial, Helvetica
 mathtext.fontset: cm
 
-# Tick settings
-xtick.bottom: True
-xtick.top: False
-ytick.left: True
-ytick.right: False
-xtick.minor.visible: False
-ytick.minor.visible: False
-xtick.major.size: 1.5
-ytick.major.size: 1.5
-xtick.major.width: 0.5
-ytick.major.width: 0.5
-xtick.direction: out
-ytick.direction: out
-
+# =============================================================================
 # Axes
+# =============================================================================
 axes.linewidth: 0.5
 axes.facecolor: none
 axes.spines.top: False
 axes.spines.right: False
 axes.spines.bottom: True
 axes.spines.left: True
+axes.labelsize: 10
+axes.unicode_minus: True
 
+# =============================================================================
+# Ticks
+# =============================================================================
+xtick.bottom: True
+xtick.top: False
+ytick.left: True
+ytick.right: False
+xtick.direction: out
+ytick.direction: out
+xtick.major.size: 1.5
+ytick.major.size: 1.5
+xtick.major.width: 0.5
+ytick.major.width: 0.5
+xtick.minor.visible: False
+ytick.minor.visible: False
+xtick.labelsize: 8
+ytick.labelsize: 8
+
+# =============================================================================
 # Lines
+# =============================================================================
 lines.linewidth: 1.0
 lines.markersize: 3
 lines.markeredgewidth: 0.2
 lines.solid_capstyle: round
 
+# =============================================================================
 # Error bars
+# =============================================================================
 errorbar.capsize: 0
 
-# Font sizes
-axes.labelsize: 10
-xtick.labelsize: 8
-ytick.labelsize: 8
+# =============================================================================
+# Legend
+# =============================================================================
+legend.frameon: False
 legend.fontsize: 8
 legend.title_fontsize: 8
-
-# Legend
-legend.frameon: False
 legend.labelspacing: 0.5
 legend.handletextpad: 0.5
 legend.handlelength: 0.5
 
-# Default color cycle using base_colors
+# =============================================================================
+# Color cycle (BASE_COLORS)
+# =============================================================================
 axes.prop_cycle: cycler('color', ['AB3019', 'FE7002', 'F4B43E', '86B4C4', '00768C', '003547'])

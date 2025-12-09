@@ -1,16 +1,13 @@
 Metadata-Version: 2.4
 Name: minimalist
-Version: 0.2.0
-Summary: A minimalist matplotlib style package for scientific presentations with custom color palettes
-Home-page: https://github.com/surajsahu/minimalist
+Version: 1.0.0
+Summary: A clean matplotlib style package for scientific figures
 Author: Suraj Sahu
-Author-email: Suraj Sahu <suraj.sahu@example.com>
 License: MIT
-Project-URL: Bug Reports, https://github.com/surajsahu/minimalist/issues
-Project-URL: Source, https://github.com/surajsahu/minimalist
-Project-URL: Documentation, https://github.com/surajsahu/minimalist/blob/main/README.md
-Keywords: matplotlib,plotting,scientific,visualization,style,LaTeX
-Classifier: Development Status :: 4 - Beta
+Project-URL: Homepage, https://github.com/surajinacademia/Matplolib-Minimalist-Theme
+Project-URL: Repository, https://github.com/surajinacademia/Matplolib-Minimalist-Theme
+Keywords: matplotlib,plotting,scientific,visualization,style
+Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Science/Research
 Classifier: License :: OSI Approved :: MIT License
 Classifier: Programming Language :: Python :: 3
@@ -18,79 +15,160 @@ Classifier: Programming Language :: Python :: 3.8
 Classifier: Programming Language :: Python :: 3.9
 Classifier: Programming Language :: Python :: 3.10
 Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Programming Language :: Python :: 3.13
 Classifier: Topic :: Scientific/Engineering :: Visualization
-Classifier: Topic :: Scientific/Engineering
 Requires-Python: >=3.8
 Description-Content-Type: text/markdown
 License-File: LICENSE
 Requires-Dist: matplotlib>=3.5.0
 Requires-Dist: numpy>=1.20.0
-Provides-Extra: latex
-Requires-Dist: dvipng; extra == "latex"
-Requires-Dist: ghostscript; extra == "latex"
 Provides-Extra: dev
 Requires-Dist: pytest>=6.0; extra == "dev"
-Requires-Dist: pytest-cov; extra == "dev"
-Requires-Dist: flake8; extra == "dev"
 Requires-Dist: black; extra == "dev"
-Provides-Extra: examples
-Requires-Dist: jupyter; extra == "examples"
-Requires-Dist: pandas; extra == "examples"
-Requires-Dist: seaborn; extra == "examples"
-Dynamic: author
-Dynamic: home-page
+Requires-Dist: ruff; extra == "dev"
 Dynamic: license-file
-Dynamic: requires-python
 
 # Minimalist
 
-A minimalist matplotlib style package for scientific presentations and publications with custom color palettes.
+A clean matplotlib style package for scientific figures.
+
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+## Features
+
+- **Two styles**: `science` (with tick marks) and `base` (minimal, no ticks)
+- **CMU Sans Serif font** with Computer Modern math notation
+- **No LaTeX required** - uses matplotlib's mathtext for Greek letters and equations
+- **Consistent color palette** for line plots and heatmaps
+- **Figure width constants** based on standard text width (510pt)
 
 ## Installation
 
 ```bash
-pip install -e packages/minimalist
+# From source (editable install)
+cd packages/minimalist
+pip install -e .
 ```
 
-## Usage
+## Quick Start
 
-### Base Style (everyday use)
 ```python
 import minimalist
-minimalist.use_style('base')
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Apply the science style
+minimalist.use_style('science')
+
+# Create a figure using the width constants
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+
+# Plot with automatic color cycling
+x = np.linspace(0, 2*np.pi, 100)
+for i in range(6):
+    ax.plot(x, np.sin(x + i*np.pi/6), label=f'$\\phi = {i}\\pi/6$')
+
+ax.set_xlabel(r'$x$ [radians]')
+ax.set_ylabel(r'$\sin(x + \phi)$')
+ax.legend()
+plt.savefig('figure.pdf')
 ```
-- CMU Sans Serif is the default font
-- No LaTeX; MathText supports Greek letters
-- Minus sign warnings suppressed via `axes.unicode_minus: False`
 
-### Science Style (publications)
+## Styles
+
+### Science Style
+Clean scientific style with small tick marks. Best for publications.
+
 ```python
-import minimalist
 minimalist.use_style('science')
 ```
-- Enables LaTeX with preamble: `amsmath`, `amssymb`
-- Auto-detects TeX on macOS (e.g., `/Library/TeX/texbin`)
-- Uses CMU Sans Serif
 
-### Combine with Color Palettes
+### Base Style
+Minimal style without tick marks. Even cleaner look.
+
 ```python
-minimalist.use_style(['base', 'rdbuye'])   # 5 colors
-minimalist.use_style(['base', 'rdbubl'])   # 9 colors
-minimalist.use_style(['science', 'rdbuye'])
+minimalist.use_style('base')
 ```
 
-## Color Palettes
-- Diverging: `RdBuYe`, `RdBuYe_r`, `Rdbu_bl`, `Rdbu_bl_r`, `Rdbu_w`, `Rdbu_w_r`
-- Sequential: `Rd`, `Rd_r`, `Bu`, `Bu_r`
-- Qualitative: `RdBuBl_q`, `RdBuYe_q`
+## Figure Width Constants
 
-## Examples
-See `packages/minimalist/examples/` for demos.
+Based on standard LaTeX article text width (510pt = 7.06 inches):
 
-## Requirements
-- Python >= 3.8
-- matplotlib >= 3.5.0
-- numpy >= 1.20.0
+| Constant | Value | Description |
+|----------|-------|-------------|
+| `FW` | 7.06" | Full text width |
+| `FW_2` | 3.53" | Half width (for 2-column layouts) |
+| `FW_3` | 2.36" | Third width (for 3-column layouts) |
+
+```python
+# Full width figure
+fig, ax = plt.subplots(figsize=(minimalist.FW, minimalist.FW_3))
+
+# Half width figure (default)
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+
+# Or use the figsize helper
+fig, ax = plt.subplots(figsize=minimalist.figsize(0.5))  # 50% width
+```
+
+## Color Palette
+
+A single, carefully chosen 6-color palette for quantitative plots:
+
+```python
+minimalist.BASE_COLORS
+# ['#AB3019', '#FE7002', '#F4B43E', '#86B4C4', '#00768C', '#003547']
+```
+
+Colors are automatically applied when using the style.
+
+## Colormap for Heatmaps
+
+Continuous colormap interpolated from the color palette:
+
+```python
+# Use directly
+plt.imshow(data, cmap='minimalist')
+
+# Or get the colormap object
+cmap = minimalist.get_cmap('minimalist')
+cmap_r = minimalist.get_cmap('minimalist_r')  # Reversed
+```
+
+## Fonts
+
+- **Text**: CMU Sans Serif
+- **Math**: Computer Modern (via mathtext)
+
+No LaTeX installation required. Use mathtext for Greek letters and equations:
+
+```python
+ax.set_xlabel(r'$\alpha$ [radians]')
+ax.set_ylabel(r'$\beta = \gamma^2$')
+ax.set_title(r'$\int_0^\pi \sin(x) dx$')
+```
+
+## API Reference
+
+| Function/Constant | Description |
+|-------------------|-------------|
+| `use_style(name)` | Apply a style ('science' or 'base') |
+| `get_cmap(name)` | Get colormap ('minimalist' or 'minimalist_r') |
+| `figsize(frac, aspect)` | Calculate figure size |
+| `FW`, `FW_2`, `FW_3` | Figure width constants |
+| `BASE_COLORS` | Color palette list |
+| `__version__` | Package version |
+
+## Demo
+
+Run the demo to see both styles:
+
+```bash
+python demo.py
+```
 
 ## License
-MIT License - see LICENSE file for details.
+
+MIT License - see [LICENSE](LICENSE) for details.

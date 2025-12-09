@@ -1,4 +1,0 @@
-include README.md
-include LICENSE
-recursive-include minimalist/styles *.mplstyle
-recursive-include minimalist *.py 
