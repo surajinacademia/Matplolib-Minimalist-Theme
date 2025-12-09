@@ -1,6 +1,6 @@
 # Minimalist base style
 # Minimal style without tick marks
-# Uses CMU Sans Serif font with DejaVu Sans mathtext fallback
+# Uses CMU Sans Serif font with Computer Modern math
 
 # =============================================================================
 # Figure
@@ -16,10 +16,8 @@ savefig.transparent: True
 # Font
 # =============================================================================
 text.usetex: False
-font.family: sans-serif
-font.sans-serif: CMU Sans Serif, DejaVu Sans
-mathtext.fontset: dejavusans
-mathtext.default: regular
+font.family: CMU Sans Serif
+mathtext.fontset: cm
 axes.unicode_minus: False
 
 # =============================================================================
@@ -71,6 +69,11 @@ legend.title_fontsize: 8
 legend.labelspacing: 0.5
 legend.handletextpad: 0.5
 legend.handlelength: 0.5
+
+# =============================================================================
+# Images/Colormaps
+# =============================================================================
+image.cmap: minimalist
 
 # =============================================================================
 # Color cycle (BASE_COLORS)
