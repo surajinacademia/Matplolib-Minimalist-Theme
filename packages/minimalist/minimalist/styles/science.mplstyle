@@ -1,6 +1,6 @@
 # Minimalist science style
-# Clean scientific style with tick marks for publications
-# Uses CMU Sans Serif font with STIX math (complete Unicode support)
+# Clean scientific style with tick marks on all sides
+# Uses CMU Sans Serif font with Computer Modern math
 
 # =============================================================================
 # Figure
@@ -18,8 +18,7 @@ savefig.facecolor: white
 # =============================================================================
 text.usetex: False
 font.family: CMU Sans Serif
-mathtext.fontset: stix
-mathtext.default: regular
+mathtext.fontset: cm
 axes.unicode_minus: False
 
 # =============================================================================
@@ -28,7 +27,7 @@ axes.unicode_minus: False
 axes.linewidth: 0.5
 axes.facecolor: white
 axes.spines.top: False
-axes.spines.right: False
+axes.spines.right: True
 axes.spines.bottom: True
 axes.spines.left: True
 axes.labelsize: 10
@@ -39,7 +38,7 @@ axes.labelsize: 10
 xtick.bottom: True
 xtick.top: False
 ytick.left: True
-ytick.right: False
+ytick.right: True
 xtick.minor.visible: False
 ytick.minor.visible: False
 xtick.major.size: 1.5
