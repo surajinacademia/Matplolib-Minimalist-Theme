@@ -1,70 +1,61 @@
-# Minimalist style for scientific presentations with LaTeX support
+# Minimalist science style
 
 # Figure properties
-figure.figsize: 6, 4
+figure.figsize: 3.53, 2.36
 figure.dpi: 300
 savefig.dpi: 300
 savefig.format: pdf
 savefig.bbox: tight
 savefig.transparent: True
 
-# Line widths
-axes.linewidth: 0.8
-xtick.major.width: 0.8
-ytick.major.width: 0.8
-xtick.minor.width: 0.6
-ytick.minor.width: 0.6
-
-# Tick sizes
-xtick.major.size: 4
-ytick.major.size: 4
-xtick.minor.size: 2
-ytick.minor.size: 2
+# Text/LaTeX settings
+text.usetex: False
+font.family: CMU Sans Serif
+mathtext.fontset: cm
 
 # Tick settings
-xtick.direction: in
-ytick.direction: in
-xtick.top: True
-ytick.right: True
 xtick.bottom: True
+xtick.top: False
 ytick.left: True
+ytick.right: False
+xtick.minor.visible: False
+ytick.minor.visible: False
+xtick.major.size: 1.5
+ytick.major.size: 1.5
+xtick.major.width: 0.5
+ytick.major.width: 0.5
+xtick.direction: out
+ytick.direction: out
 
-# Enable minor ticks
-xtick.minor.visible: True
-ytick.minor.visible: True
-
-# Legend settings
-legend.frameon: False
-legend.numpoints: 1
-legend.scatterpoints: 1
-
-# Axes properties - all spines visible (all around the plot)
-axes.spines.top: True
-axes.spines.right: True
+# Axes
+axes.linewidth: 0.5
+axes.facecolor: none
+axes.spines.top: False
+axes.spines.right: False
 axes.spines.bottom: True
 axes.spines.left: True
 
-# Line properties
-lines.linewidth: 1.5
-lines.markersize: 6
+# Lines
+lines.linewidth: 1.0
+lines.markersize: 3
+lines.markeredgewidth: 0.2
+lines.solid_capstyle: round
 
-# LaTeX settings
-text.usetex: True
-font.family: sans-serif
-font.sans-serif: CMU Sans Serif
-mathtext.fontset: cm
-text.latex.preamble: \usepackage{amsmath} \usepackage{amssymb}
+# Error bars
+errorbar.capsize: 0
 
 # Font sizes
-font.size: 12
-axes.labelsize: 12
-xtick.labelsize: 10
-ytick.labelsize: 10
-legend.fontsize: 10
+axes.labelsize: 10
+xtick.labelsize: 8
+ytick.labelsize: 8
+legend.fontsize: 8
+legend.title_fontsize: 8
 
-axes.unicode_minus: False
+# Legend
+legend.frameon: False
+legend.labelspacing: 0.5
+legend.handletextpad: 0.5
+legend.handlelength: 0.5
 
-# Default color cycle using RdBuYe_q palette
-axes.prop_cycle: cycler('color', ['012a4a', '2c7da0', 'a9d6e5', 'ee9b00', '9b2226'])
- 
-
+# Default color cycle using base_colors
+axes.prop_cycle: cycler('color', ['AB3019', 'FE7002', 'F4B43E', '86B4C4', '00768C', '003547'])

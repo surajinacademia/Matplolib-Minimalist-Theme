@@ -1,72 +1,25 @@
+"""Color palettes for minimalist matplotlib styles."""
+
+from matplotlib.colors import LinearSegmentedColormap, ListedColormap
+import matplotlib.pyplot as plt
+
+# Base colors for quantitative plots
+BASE_COLORS = ['#AB3019', '#FE7002', '#F4B43E', '#86B4C4', '#00768C', '#003547']
+
+# Create continuous colormap for heatmaps
+BASE_CMAP = LinearSegmentedColormap.from_list('base', BASE_COLORS)
+BASE_CMAP_R = LinearSegmentedColormap.from_list('base_r', BASE_COLORS[::-1])
+
+# Register colormaps with matplotlib
+try:
+    plt.colormaps.register(cmap=BASE_CMAP, name='minimalist')
+    plt.colormaps.register(cmap=BASE_CMAP_R, name='minimalist_r')
+except ValueError:
+    # Already registered
+    pass
+
+# Legacy support - keep minimal palettes
 COLOR_PALETTES = {
-    # Diverging color palettes
-    'RdBuYe': [
-        '#012a4a',  # prussian-blue
-        '#2c7da0',  # cerulean
-        '#a9d6e5',  # light-blue
-        '#ee9b00',  # gamboge
-        '#9b2226'   # auburn
-    ],
-    
-    'RdBuYe_r': [
-        '#9b2226',  # auburn
-        '#ee9b00',  # gamboge
-        '#a9d6e5',  # light-blue
-        '#2c7da0',  # cerulean
-        '#012a4a'   # prussian-blue
-    ],
-    
-    # Diverging with black center
-    'Rdbu_bl': [
-        '#f4a582', '#d6604d', '#b2182b', '#67001f', '#000000',
-        '#053061', '#2166ac', '#4393c3', '#d1e5f0'
-    ],
-    
-    'Rdbu_bl_r': [
-        '#d1e5f0', '#4393c3', '#2166ac', '#053061', '#000000',
-        '#67001f', '#b2182b', '#d6604d', '#f4a582'
-    ],
-    
-    # Diverging with white center
-    'Rdbu_w': [
-        '#67001f', '#b2182b', '#d6604d', '#f4a582', '#ffffff',
-        '#d1e5f0', '#4393c3', '#2166ac', '#053061'
-    ],
-    
-    'Rdbu_w_r': [
-        '#053061', '#2166ac', '#4393c3', '#d1e5f0', '#ffffff',
-        '#f4a582', '#d6604d', '#b2182b', '#67001f'
-    ],
-    
-    # Sequential Red
-    'Rd': [
-        '#fddbc7', '#f4a582', '#d6604d', '#b2182b', '#67001f', '#000000'
-    ],
-    
-    'Rd_r': [
-        '#000000', '#67001f', '#b2182b', '#d6604d', '#f4a582', '#fddbc7'
-    ],
-    
-    # Sequential Blue
-    'Bu': [
-        '#d1e5f0', '#92c5de', '#4393c3', '#2166ac', '#053061', '#000000'
-    ],
-    
-    'Bu_r': [
-        '#000000', '#053061', '#2166ac', '#4393c3', '#92c5de', '#d1e5f0'
-    ],
-    
-    # Qualitative palettes
-    'RdBuBl_q': [
-        '#053061', '#2166ac', '#4393c3', '#000000', '#808080', 
-        '#CCCCCC', '#d6604d', '#b2182b', '#67001f'
-    ],
-    
-    'RdBuYe_q': [
-        '#012a4a',  # prussian-blue
-        '#2c7da0',  # cerulean
-        '#a9d6e5',  # light-blue
-        '#ee9b00',  # gamboge
-        '#9b2226'   # auburn
-    ]
-} 
+    'base': BASE_COLORS,
+    'base_r': BASE_COLORS[::-1],
+}

@@ -1,4 +1,0 @@
-# RdBu color scheme for scientific presentations
-
-# Color settings - RdBu colormap with distinct colors
-axes.prop_cycle : cycler('color', ['67001f', 'd6604d', '053061', '4393c3', 'b2182b', '2166ac']) 

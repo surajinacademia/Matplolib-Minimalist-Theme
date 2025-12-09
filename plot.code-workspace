@@ -4,5 +4,8 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"workbench.colorTheme": "Monokai Pro (Filter Spectrum)",
+		"jupyter.themeMatplotlibPlots": true
+	}
 }
