@@ -1,6 +1,6 @@
 # Minimalist science style
 # Clean scientific style with tick marks for publications
-# Uses DejaVu Sans as fallback for CMU Sans Serif, Computer Modern for math
+# Uses CMU Sans Serif font and Computer Modern math (no TeX required)
 
 # =============================================================================
 # Figure
@@ -13,11 +13,10 @@ savefig.bbox: tight
 savefig.transparent: True
 
 # =============================================================================
-# Font (sans-serif with Computer Modern math)
+# Font
 # =============================================================================
 text.usetex: False
-font.family: sans-serif
-font.sans-serif: CMU Sans Serif, DejaVu Sans, Arial, Helvetica
+font.family: CMU Sans Serif
 mathtext.fontset: cm
 
 # =============================================================================
@@ -30,7 +29,6 @@ axes.spines.right: False
 axes.spines.bottom: True
 axes.spines.left: True
 axes.labelsize: 10
-axes.unicode_minus: True
 
 # =============================================================================
 # Ticks
@@ -39,14 +37,12 @@ xtick.bottom: True
 xtick.top: False
 ytick.left: True
 ytick.right: False
-xtick.direction: out
-ytick.direction: out
+xtick.minor.visible: False
+ytick.minor.visible: False
 xtick.major.size: 1.5
 ytick.major.size: 1.5
 xtick.major.width: 0.5
 ytick.major.width: 0.5
-xtick.minor.visible: False
-ytick.minor.visible: False
 xtick.labelsize: 8
 ytick.labelsize: 8
 

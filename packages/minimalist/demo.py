@@ -27,7 +27,7 @@ minimalist.use_style('science')
 
 fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
 
-# Phase field / level set interface profiles (inspired by demo.ipynb)
+# Phase field / level set interface profiles
 N = 200
 delta = 0.6
 X = np.linspace(-1, 1, N)
@@ -44,8 +44,7 @@ ax.legend(loc='upper right')
 
 plt.tight_layout()
 plt.savefig('demo_science.pdf')
-plt.savefig('demo_science.png', dpi=300)
-print("  Saved: demo_science.pdf, demo_science.png")
+print("  Saved: demo_science.pdf")
 
 
 # =============================================================================
@@ -70,8 +69,7 @@ ax.legend(loc='upper right')
 
 plt.tight_layout()
 plt.savefig('demo_base.pdf')
-plt.savefig('demo_base.png', dpi=300)
-print("  Saved: demo_base.pdf, demo_base.png")
+print("  Saved: demo_base.pdf")
 
 
 # =============================================================================
@@ -95,8 +93,7 @@ ax.legend(loc='upper right', ncol=2, fontsize=6)
 
 plt.tight_layout()
 plt.savefig('demo_colors.pdf')
-plt.savefig('demo_colors.png', dpi=300)
-print("  Saved: demo_colors.pdf, demo_colors.png")
+print("  Saved: demo_colors.pdf")
 
 
 # =============================================================================
@@ -130,8 +127,7 @@ plt.colorbar(im2, ax=ax2, shrink=0.8)
 
 plt.tight_layout()
 plt.savefig('demo_heatmap.pdf')
-plt.savefig('demo_heatmap.png', dpi=300)
-print("  Saved: demo_heatmap.pdf, demo_heatmap.png")
+print("  Saved: demo_heatmap.pdf")
 
 
 # =============================================================================
@@ -160,14 +156,13 @@ ax.legend(loc='lower right')
 
 plt.tight_layout()
 plt.savefig('demo_math.pdf')
-plt.savefig('demo_math.png', dpi=300)
-print("  Saved: demo_math.pdf, demo_math.png")
+print("  Saved: demo_math.pdf")
 
 
 # =============================================================================
-# Demo 6: Scatter Plot with Error Bars
+# Demo 6: Scatter Plot
 # =============================================================================
-print("Demo 6: Scatter plot with error bars...")
+print("Demo 6: Scatter plot...")
 
 minimalist.use_style('science')
 
@@ -186,8 +181,7 @@ ax.legend(loc='upper left', fontsize=6, ncol=2)
 
 plt.tight_layout()
 plt.savefig('demo_scatter.pdf')
-plt.savefig('demo_scatter.png', dpi=300)
-print("  Saved: demo_scatter.pdf, demo_scatter.png")
+print("  Saved: demo_scatter.pdf")
 
 
 # =============================================================================
@@ -207,19 +201,17 @@ ax1.set_xlabel(r'$x$')
 ax1.set_ylabel(r'$\sin(x)$')
 ax1.set_title('Science')
 
-# Base style (right) - reapply to current axes would need figure recreation
-# So we'll manually hide ticks for demonstration
+# Base style (right) - manually hide ticks
 for i in range(3):
     ax2.plot(x, np.cos(x + i*np.pi/3))
 ax2.set_xlabel(r'$x$')
 ax2.set_ylabel(r'$\cos(x)$')
 ax2.set_title('Base')
-ax2.tick_params(axis='both', which='major', length=0)  # Hide ticks
+ax2.tick_params(axis='both', which='major', length=0)
 
 plt.tight_layout()
 plt.savefig('demo_comparison.pdf')
-plt.savefig('demo_comparison.png', dpi=300)
-print("  Saved: demo_comparison.pdf, demo_comparison.png")
+print("  Saved: demo_comparison.pdf")
 
 
 # =============================================================================
@@ -231,13 +223,13 @@ print("Demo complete!")
 print("=" * 60)
 print()
 print("Generated files:")
-print("  - demo_science.pdf/png   : Science style")
-print("  - demo_base.pdf/png      : Base style (no ticks)")
-print("  - demo_colors.pdf/png    : All 6 colors")
-print("  - demo_heatmap.pdf/png   : Continuous colormap")
-print("  - demo_math.pdf/png      : Math notation")
-print("  - demo_scatter.pdf/png   : Scatter plot")
-print("  - demo_comparison.pdf/png: Style comparison")
+print("  - demo_science.pdf    : Science style")
+print("  - demo_base.pdf       : Base style (no ticks)")
+print("  - demo_colors.pdf     : All 6 colors")
+print("  - demo_heatmap.pdf    : Continuous colormap")
+print("  - demo_math.pdf       : Math notation")
+print("  - demo_scatter.pdf    : Scatter plot")
+print("  - demo_comparison.pdf : Style comparison")
 print()
 print("Usage:")
 print("  import minimalist")
