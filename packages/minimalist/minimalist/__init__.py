@@ -138,6 +138,43 @@ def figsize(width_fraction=1, aspect_ratio=None):
     return (width, height)
 
 
+def color_legend_text(ax):
+    """
+    Color legend text labels to match their corresponding line/marker colors.
+    
+    Parameters
+    ----------
+    ax : matplotlib.axes.Axes
+        The axes containing the legend
+    
+    Examples
+    --------
+    >>> ax.plot(x, y1, label='Data 1')
+    >>> ax.plot(x, y2, label='Data 2')
+    >>> ax.legend()
+    >>> minimalist.color_legend_text(ax)
+    """
+    legend = ax.get_legend()
+    if legend is None:
+        return
+    
+    for text, handle in zip(legend.get_texts(), legend.legend_handles):
+        # Get color from the handle
+        if hasattr(handle, 'get_color'):
+            color = handle.get_color()
+        elif hasattr(handle, 'get_facecolor'):
+            color = handle.get_facecolor()
+        else:
+            continue
+        
+        # Handle array colors (from scatter plots)
+        if hasattr(color, '__len__') and not isinstance(color, str):
+            if len(color) > 0:
+                color = color[0] if hasattr(color[0], '__len__') else color
+        
+        text.set_color(color)
+
+
 # =============================================================================
 # Register styles with matplotlib
 # =============================================================================
@@ -163,4 +200,6 @@ __all__ = [
     'TEXT_WIDTH', 'FW', 'FW_2', 'FW_3', 'figsize',
     # Colors
     'BASE_COLORS', 'get_cmap',
+    # Utilities
+    'color_legend_text',
 ]
