@@ -1,5 +1,5 @@
 # Minimalist science style
-# Clean scientific style with tick marks on all sides
+# Clean scientific style with tick marks
 # Uses CMU Sans Serif font with Computer Modern math
 
 # =============================================================================
@@ -25,9 +25,9 @@ axes.unicode_minus: False
 # Axes
 # =============================================================================
 axes.linewidth: 0.5
-axes.facecolor: white
+axes.facecolor: none
 axes.spines.top: False
-axes.spines.right: True
+axes.spines.right: False
 axes.spines.bottom: True
 axes.spines.left: True
 axes.labelsize: 10
@@ -38,7 +38,7 @@ axes.labelsize: 10
 xtick.bottom: True
 xtick.top: False
 ytick.left: True
-ytick.right: True
+ytick.right: False
 xtick.minor.visible: False
 ytick.minor.visible: False
 xtick.major.size: 1.5
