@@ -1,10 +1,8 @@
-## Plot Styles Monorepo
+## Plot Styles 
 
 This repository contains Matplotlib style packages:
 
 - `packages/minimalist`: A minimalist Matplotlib style for scientific figures with curated color palettes.
-- `packages/minimalist/legacy/minimalist_rdbu`: Older minimalist RdBu variant preserved as a legacy subpackage.
-- `packages/scienceplots`: Third-party SciencePlots package vendored for convenience.
 
 ### Quick Start (development install)
 
@@ -50,9 +48,7 @@ plt.show()
 
 ```
 packages/
-  minimalist/
-  minimalist_rdbu/
-  scienceplots/
+  minimalist
 ```
 
 Each package is a standalone Python distribution with its own README and setup metadata.
