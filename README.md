@@ -1,8 +1,8 @@
 ## Plot Styles Monorepo
 
-This repository is a monorepo containing three Matplotlib style packages:
+This repository contains Matplotlib style packages:
 
-- `packages/minimalist`: A minimalist Matplotlib style with base and science variants plus curated color palettes.
+- `packages/minimalist`: A minimalist Matplotlib style for scientific figures with curated color palettes.
 - `packages/minimalist/legacy/minimalist_rdbu`: Older minimalist RdBu variant preserved as a legacy subpackage.
 - `packages/scienceplots`: Third-party SciencePlots package vendored for convenience.
 
@@ -18,42 +18,33 @@ pip install -e packages/scienceplots
 ```
 
 ### What's configured by default
-- CMU Sans Serif is the default font for both base and science styles (no manual font setup needed)
-- Science style enables LaTeX and will auto-detect a TeX installation on macOS (e.g., `/Library/TeX/texbin`)
-- Base style uses MathText (no LaTeX) for Greek letters
-- Minus sign warnings are suppressed via `axes.unicode_minus: False`
+- CMU Sans Serif font with Computer Modern math (no LaTeX required)
+- Transparent figure/axes backgrounds for easy embedding
+- Explicit black text, labels, ticks, and edges
+- Thin lines (0.5pt), small markers, capsize 1.0
+- Minus sign warnings suppressed via `axes.unicode_minus: False`
 
 ### Usage
 
-- Minimalist (everyday plots, no LaTeX):
 ```python
 import matplotlib.pyplot as plt
 import minimalist
 
-minimalist.use_style('base')
-plt.plot([1,2,3],[1,4,9])
+minimalist.use_style('science')
+
+fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
+ax.plot([1, 2, 3], [1, 4, 9])
 plt.show()
 ```
 
-- Minimalist (publication style with LaTeX):
-```python
-import minimalist
-minimalist.use_style('science')
-```
+### Figure Width Constants
 
-- Minimalist with RdBu color cycles:
-```python
-import minimalist
-minimalist.use_style(['base', 'rdbuye'])   # 5-color cycle
-minimalist.use_style(['base', 'rdbubl'])   # 9-color cycle
-```
-
-- SciencePlots (vendored example set):
-```python
-import matplotlib.pyplot as plt
-import scienceplots
-plt.style.use('science')
-```
+| Constant | Value | Description |
+|----------|-------|-------------|
+| `FW` | 7.06" | Full text width |
+| `FW_2` | 3.53" | Half width |
+| `FW_3` | 2.36" | Third width |
+| `FW_4` | 1.77" | Quarter width |
 
 ### Repository Layout
 

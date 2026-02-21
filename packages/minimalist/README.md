@@ -7,7 +7,7 @@ A clean matplotlib style package for scientific figures.
 
 ## Features
 
-- **Two styles**: `science` (with tick marks) and `base` (minimal, no ticks)
+- **Science style** with transparent backgrounds, tick marks, and publication-ready defaults
 - **CMU Sans Serif font** with Computer Modern math notation
 - **No LaTeX required** - uses matplotlib's mathtext for Greek letters and equations
 - **Consistent color palette** for line plots and heatmaps
@@ -45,22 +45,6 @@ ax.legend()
 plt.savefig('figure.pdf')
 ```
 
-## Styles
-
-### Science Style
-Clean scientific style with small tick marks. Best for publications.
-
-```python
-minimalist.use_style('science')
-```
-
-### Base Style
-Minimal style without tick marks. Even cleaner look.
-
-```python
-minimalist.use_style('base')
-```
-
 ## Figure Width Constants
 
 Based on standard LaTeX article text width (510pt = 7.06 inches):
@@ -70,6 +54,7 @@ Based on standard LaTeX article text width (510pt = 7.06 inches):
 | `FW` | 7.06" | Full text width |
 | `FW_2` | 3.53" | Half width (for 2-column layouts) |
 | `FW_3` | 2.36" | Third width (for 3-column layouts) |
+| `FW_4` | 1.77" | Quarter width |
 
 ```python
 # Full width figure
@@ -123,16 +108,17 @@ ax.set_title(r'$\int_0^\pi \sin(x) dx$')
 
 | Function/Constant | Description |
 |-------------------|-------------|
-| `use_style(name)` | Apply a style ('science' or 'base') |
+| `use_style('science')` | Apply the science style |
 | `get_cmap(name)` | Get colormap ('minimalist' or 'minimalist_r') |
 | `figsize(frac, aspect)` | Calculate figure size |
-| `FW`, `FW_2`, `FW_3` | Figure width constants |
+| `FW`, `FW_2`, `FW_3`, `FW_4` | Figure width constants |
 | `BASE_COLORS` | Color palette list |
+| `color_legend_text(ax)` | Color legend text to match line colors |
 | `__version__` | Package version |
 
 ## Demo
 
-Run the demo to see both styles:
+Run the demo to see the style:
 
 ```bash
 python demo.py

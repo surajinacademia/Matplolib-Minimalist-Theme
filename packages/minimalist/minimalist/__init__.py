@@ -1,11 +1,7 @@
 """
 Minimalist - A clean matplotlib style package for scientific figures.
 
-This package provides two styles:
-- science: Clean scientific style with tick marks
-- base: Minimal style without tick marks
-
-Both styles use CMU Sans Serif font and Computer Modern for math notation.
+Uses CMU Sans Serif font and Computer Modern for math notation.
 No LaTeX/TeX required - uses matplotlib's mathtext for Greek letters and equations.
 
 Usage:
@@ -23,7 +19,7 @@ import os
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"
 __author__ = "Suraj Sahu"
 
 # =============================================================================
@@ -35,6 +31,7 @@ TEXT_WIDTH = 510 / 72.27  # ~7.06 inches
 FW = TEXT_WIDTH           # Full width
 FW_2 = TEXT_WIDTH / 2     # Half width (~3.53 inches)
 FW_3 = TEXT_WIDTH / 3     # Third width (~2.36 inches)
+FW_4 = TEXT_WIDTH / 4     # Quarter width (~1.77 inches)
 
 # =============================================================================
 # Color Palette
@@ -60,16 +57,14 @@ except ValueError:
 # =============================================================================
 # Style Functions
 # =============================================================================
-def use_style(style_name):
+def use_style(style_name='science'):
     """
-    Apply a minimalist style to matplotlib.
+    Apply the minimalist science style to matplotlib.
     
     Parameters
     ----------
     style_name : str
-        Style to apply: 'science' or 'base'
-        - science: Clean style with tick marks (for publications)
-        - base: Minimal style without tick marks
+        Style to apply (default: 'science')
     
     Examples
     --------
@@ -79,9 +74,11 @@ def use_style(style_name):
     style_file = os.path.join(os.path.dirname(__file__), 'styles', f'{style_name}.mplstyle')
     
     if not os.path.exists(style_file):
-        raise ValueError(f"Unknown style '{style_name}'. Available: 'science', 'base'")
+        raise ValueError(f"Unknown style '{style_name}'. Available: 'science'")
     
     plt.style.use(style_file)
+    # Explicitly ensure unicode minus is disabled (some fonts lack the glyph)
+    plt.rcParams['axes.unicode_minus'] = False
 
 
 def get_cmap(name='minimalist'):
@@ -197,7 +194,7 @@ __all__ = [
     # Style
     'use_style',
     # Figure sizing
-    'TEXT_WIDTH', 'FW', 'FW_2', 'FW_3', 'figsize',
+    'TEXT_WIDTH', 'FW', 'FW_2', 'FW_3', 'FW_4', 'figsize',
     # Colors
     'BASE_COLORS', 'get_cmap',
     # Utilities

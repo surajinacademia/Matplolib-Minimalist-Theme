@@ -1,33 +1,34 @@
 # Minimalist science style
-# Clean scientific style with tick marks
+# Clean scientific style with tick marks on all sides
 # Uses CMU Sans Serif font with Computer Modern math
 
 # =============================================================================
 # Figure
 # =============================================================================
 figure.figsize: 3.53, 2.36
-figure.dpi: 300
-figure.facecolor: white
-savefig.dpi: 300
+figure.dpi: 150
+figure.facecolor: none
 savefig.format: pdf
-savefig.bbox: tight
-savefig.facecolor: white
+savefig.facecolor: none
 
 # =============================================================================
 # Font
 # =============================================================================
 text.usetex: False
+text.color: black
 font.family: CMU Sans Serif
 mathtext.fontset: cm
 axes.unicode_minus: False
 
 # =============================================================================
-# Axes
+# Axes (all 4 spines visible)
 # =============================================================================
-axes.linewidth: 0.5
+axes.linewidth: 0.35
 axes.facecolor: none
-axes.spines.top: False
-axes.spines.right: False
+axes.edgecolor: black
+axes.labelcolor: black
+axes.spines.top: True
+axes.spines.right: True
 axes.spines.bottom: True
 axes.spines.left: True
 axes.labelsize: 10
@@ -39,27 +40,33 @@ xtick.bottom: True
 xtick.top: False
 ytick.left: True
 ytick.right: False
+xtick.direction: in
+ytick.direction: in
 xtick.minor.visible: False
 ytick.minor.visible: False
 xtick.major.size: 1.5
 ytick.major.size: 1.5
-xtick.major.width: 0.5
-ytick.major.width: 0.5
+xtick.major.width: 0.35
+ytick.major.width: 0.35
 xtick.labelsize: 8
 ytick.labelsize: 8
+xtick.color: black
+ytick.color: black
 
 # =============================================================================
 # Lines
 # =============================================================================
-lines.linewidth: 1.0
-lines.markersize: 3
-lines.markeredgewidth: 0.2
+lines.linewidth: 0.5
+lines.marker: none
+lines.markersize: 2
+lines.markeredgewidth: 0.5
+lines.markerfacecolor: white
 lines.solid_capstyle: round
 
 # =============================================================================
 # Error bars
 # =============================================================================
-errorbar.capsize: 0
+errorbar.capsize: 1.0
 
 # =============================================================================
 # Legend
