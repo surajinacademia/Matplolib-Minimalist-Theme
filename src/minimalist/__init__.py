@@ -15,13 +15,14 @@ Usage:
     plt.imshow(data, cmap='minimalist')
 """
 
-import os
 import functools
+import os
+
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.colors import LinearSegmentedColormap
 import scicomap as sc
+from matplotlib.colors import LinearSegmentedColormap
 
 __version__ = "2.1.0"
 __author__ = "Suraj Sahu"
@@ -58,7 +59,7 @@ _BASE_CMAP_R = LinearSegmentedColormap.from_list("minimalist_r", BASE_COLORS[::-
 try:
     pride_cmap = sc.ScicoDiverging(cmap="pride").get_mpl_color_map()
     plt.colormaps.register(cmap=pride_cmap, name="pride")
-except Exception:
+except ValueError:
     pass
 
 try:
@@ -363,9 +364,8 @@ def color_legend_text(ax):
             continue
 
         # Handle array colors (from scatter plots)
-        if hasattr(color, "__len__") and not isinstance(color, str):
-            if len(color) > 0:
-                color = color[0] if hasattr(color[0], "__len__") else color
+        if hasattr(color, "__len__") and not isinstance(color, str) and len(color) > 0:
+            color = color[0] if hasattr(color[0], "__len__") else color
 
         text.set_color(color)
 
@@ -402,42 +402,34 @@ FILL_ALPHA = 0.1
 # =============================================================================
 # Register styles with matplotlib
 # =============================================================================
-try:
-    _styles_path = os.path.join(os.path.dirname(__file__), "styles")
-    if os.path.isdir(_styles_path):
-        _stylesheets = plt.style.core.read_style_directory(_styles_path)
-        plt.style.core.update_nested_dict(plt.style.library, _stylesheets)
-        plt.style.core.available[:] = sorted(plt.style.library.keys())
-except Exception:
-    pass
+_styles_path = os.path.join(os.path.dirname(__file__), "styles")
+if os.path.isdir(_styles_path):
+    _stylesheets = plt.style.core.read_style_directory(_styles_path)
+    plt.style.core.update_nested_dict(plt.style.library, _stylesheets)
+    plt.style.core.available[:] = sorted(plt.style.library.keys())
 
 
 # =============================================================================
 # Public API
 # =============================================================================
 __all__ = [
-    # Version
-    "__version__",
-    # Style
     "AVAILABLE_STYLES",
-    "use_style",
-    "enable_errorbar_marker_gap",
-    "apply_errorbar_marker_gap",
-    # Figure sizing
-    "TEXT_WIDTH",
+    "BASE_COLORS",
+    "DIVERGING_CMAP",
+    "FILL_ALPHA",
     "FW",
     "FW_2",
     "FW_3",
     "FW_4",
-    "figsize",
-    # Colors & Alphas
-    "BASE_COLORS",
     "QUALITATIVE_COLORS",
-    "DIVERGING_CMAP",
     "SEQUENTIAL_CMAP",
-    "get_cmap",
-    "FILL_ALPHA",
-    # Utilities
+    "TEXT_WIDTH",
+    "__version__",
+    "apply_errorbar_marker_gap",
     "color_legend_text",
+    "enable_errorbar_marker_gap",
+    "figsize",
+    "get_cmap",
     "remove_all_clipping",
+    "use_style",
 ]

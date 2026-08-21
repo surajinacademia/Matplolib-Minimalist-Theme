@@ -1,7 +1,8 @@
-import pytest
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
 from matplotlib.colors import LinearSegmentedColormap
+
 import minimalist
 
 
@@ -119,8 +120,8 @@ def _errorbar_center_rgb(marker_gap=None):
 
     rgba = np.asarray(fig.canvas.buffer_rgba())
     cx, cy = ax.transData.transform((0, 0))
-    row = rgba.shape[0] - 1 - int(round(cy))
-    col = int(round(cx))
+    row = rgba.shape[0] - 1 - round(cy)
+    col = round(cx)
     center_rgb = rgba[row, col, :3]
     markerfacecolor = container.lines[0].get_markerfacecolor()
     plt.close(fig)
