@@ -5,17 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [3.0.0] - 2026-08-21
 
 ### Changed
 - **Breaking**: Replaced the `science` style with explicit `white` and `black` styles.
+- **Breaking**: Updated the supported Python range to 3.10–3.14.
 - `use_style()` now defaults to `white`; `black` preserves the black-background appearance.
 - Both styles use 8 pt typography for base text, figure titles, axis titles, axis labels, tick labels, legends, and legend titles.
 
 ### Fixed
 - Declared `scicomap` as a runtime dependency.
-- Kept Python 3.8–3.9 compatible by using the built-in warm–cool palette when a compatible `scicomap` release is unavailable.
+- Added a deterministic warm–cool fallback if `scicomap` cannot provide `pride`.
 - Avoided Matplotlib's private style-registry API, which was removed in newer releases.
+- Made colormap registration independent and idempotent.
+- Added validation for style names, figure dimensions, and marker-gap defaults.
 
 ## [2.0.0] - 2025-02-21
 

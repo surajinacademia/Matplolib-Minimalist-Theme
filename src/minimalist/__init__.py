@@ -16,7 +16,8 @@ Usage:
 """
 
 import functools
-import os
+from numbers import Real
+from pathlib import Path
 
 import matplotlib as mpl
 import matplotlib.pyplot as plt
@@ -28,7 +29,7 @@ try:
 except (AttributeError, ImportError, TypeError):
     sc = None
 
-__version__ = "2.1.0"
+__version__ = "3.0.0"
 __author__ = "Suraj Sahu"
 
 # =============================================================================
@@ -59,30 +60,36 @@ SEQUENTIAL_CMAP = "inferno"
 _BASE_CMAP = LinearSegmentedColormap.from_list("minimalist", BASE_COLORS)
 _BASE_CMAP_R = LinearSegmentedColormap.from_list("minimalist_r", BASE_COLORS[::-1])
 
-# Register colormaps with matplotlib. Older Python versions use a local
-# warm-to-cool fallback because compatible scicomap releases are unavailable.
-if sc is None:
-    pride_cmap = LinearSegmentedColormap.from_list("pride", BASE_COLORS)
-else:
-    pride_cmap = sc.ScicoDiverging(cmap="pride").get_mpl_color_map()
 
-try:
-    plt.colormaps.register(cmap=pride_cmap, name="pride")
-except ValueError:
-    # Already registered
-    pass
+def _make_pride_cmap():
+    """Build the preferred diverging map, with a deterministic local fallback."""
+    if sc is not None:
+        try:
+            return sc.ScicoDiverging(cmap="pride").get_mpl_color_map()
+        except (AttributeError, KeyError, RuntimeError, TypeError, ValueError):
+            pass
+    return LinearSegmentedColormap.from_list("pride", BASE_COLORS)
 
-try:
-    plt.colormaps.register(cmap=_BASE_CMAP, name="minimalist")
-    plt.colormaps.register(cmap=_BASE_CMAP_R, name="minimalist_r")
-except ValueError:
-    # Already registered
-    pass
+
+def _register_colormap(cmap, name):
+    """Register one colormap without preventing independent registrations."""
+    try:
+        mpl.colormaps.register(cmap=cmap, name=name)
+    except ValueError:
+        # Matplotlib raises when another import already registered the same name.
+        if name not in mpl.colormaps:
+            raise
+
+
+_register_colormap(_make_pride_cmap(), "pride")
+_register_colormap(_BASE_CMAP, "minimalist")
+_register_colormap(_BASE_CMAP_R, "minimalist_r")
 
 # =============================================================================
 # Style Functions
 # =============================================================================
 AVAILABLE_STYLES = ("white", "black")
+_STYLES_DIR = Path(__file__).resolve().parent / "styles"
 
 
 def use_style(style_name="white"):
@@ -99,13 +106,15 @@ def use_style(style_name="white"):
     >>> import minimalist
     >>> minimalist.use_style('white')
     """
-    style_file = os.path.join(os.path.dirname(__file__), "styles", f"{style_name}.mplstyle")
-
-    if not os.path.exists(style_file):
+    if style_name not in AVAILABLE_STYLES:
         available = ", ".join(repr(style) for style in AVAILABLE_STYLES)
         raise ValueError(f"Unknown style '{style_name}'. Available: {available}")
 
-    plt.style.use(style_file)
+    style_file = _STYLES_DIR / f"{style_name}.mplstyle"
+    if not style_file.is_file():
+        raise RuntimeError(f"Installed style file is missing: {style_file.name}")
+
+    plt.style.use(str(style_file))
     # Explicitly ensure unicode minus is disabled (some fonts lack the glyph)
     plt.rcParams["axes.unicode_minus"] = False
     enable_errorbar_marker_gap()
@@ -120,6 +129,9 @@ def enable_errorbar_marker_gap(default=True):
     default : bool
         Default value for Matplotlib's ``marker_gap`` errorbar option.
     """
+    if not isinstance(default, bool):
+        raise TypeError("default must be a boolean")
+
     from matplotlib.axes import Axes
 
     if getattr(Axes.errorbar, "_minimalist_marker_gap_default", None) == default:
@@ -310,7 +322,7 @@ def get_cmap(type_="diverging"):
     elif type_ == "sequential":
         return mpl.colormaps.get_cmap(SEQUENTIAL_CMAP)
     elif type_ == "qualitative":
-        return QUALITATIVE_COLORS
+        return QUALITATIVE_COLORS.copy()
     elif type_ in ["minimalist", "minimalist_r"]:
         return mpl.colormaps.get_cmap(type_)
     else:
@@ -326,7 +338,7 @@ def figsize(width_fraction=1, aspect_ratio=None):
     width_fraction : float
         Fraction of text width (default: 1 for full width)
     aspect_ratio : float, optional
-        Height/width ratio. Default: golden ratio (~0.618)
+        Height/width ratio. Default: square (1.0)
 
     Returns
     -------
@@ -337,11 +349,24 @@ def figsize(width_fraction=1, aspect_ratio=None):
     --------
     >>> fig, ax = plt.subplots(figsize=minimalist.figsize(0.5))
     """
+    width_fraction = _positive_finite_number(width_fraction, "width_fraction")
     if aspect_ratio is None:
-        aspect_ratio = 1  # Square ratio
+        aspect_ratio = 1.0  # Square ratio
+    else:
+        aspect_ratio = _positive_finite_number(aspect_ratio, "aspect_ratio")
+
     width = TEXT_WIDTH * width_fraction
     height = width * aspect_ratio
     return (width, height)
+
+
+def _positive_finite_number(value, name):
+    if isinstance(value, bool) or not isinstance(value, Real):
+        raise TypeError(f"{name} must be a real number")
+    value = float(value)
+    if not np.isfinite(value) or value <= 0:
+        raise ValueError(f"{name} must be finite and greater than zero")
+    return value
 
 
 def color_legend_text(ax):
@@ -364,7 +389,11 @@ def color_legend_text(ax):
     if legend is None:
         return
 
-    for text, handle in zip(legend.get_texts(), legend.legend_handles):
+    handles = getattr(legend, "legend_handles", None)
+    if handles is None:
+        handles = getattr(legend, "legendHandles", ())
+
+    for text, handle in zip(legend.get_texts(), handles):
         # Get color from the handle
         if hasattr(handle, "get_color"):
             color = handle.get_color()

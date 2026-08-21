@@ -3,7 +3,7 @@
 # 🧪 Minimalist
 ### A clean, production-grade Matplotlib style for scientific figures.
 
-[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
 [![CI](https://img.shields.io/github/actions/workflow/status/surajinacademia/Matplolib-Minimalist-Theme/ci.yml?branch=main&style=for-the-badge&logo=github)](https://github.com/surajinacademia/Matplolib-Minimalist-Theme/actions)
 
@@ -36,10 +36,12 @@
 
 ## 🚀 Installation
 
+Minimalist supports the actively maintained CPython releases **3.10 through 3.14**.
+
 ```bash
 # Clone the repository
 git clone https://github.com/surajinacademia/Matplolib-Minimalist-Theme.git
-cd Matplolib-Minimalist-Theme/packages/minimalist
+cd Matplolib-Minimalist-Theme
 
 # Install in editable mode
 pip install -e .

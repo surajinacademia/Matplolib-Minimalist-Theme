@@ -1,3 +1,5 @@
+from importlib.resources import files
+
 import matplotlib.pyplot as plt
 import numpy as np
 import pytest
@@ -7,7 +9,16 @@ import minimalist
 
 
 def test_version():
-    assert minimalist.__version__ == "2.1.0"
+    assert minimalist.__version__ == "3.0.0"
+
+
+@pytest.fixture(autouse=True)
+def reset_matplotlib_state():
+    plt.close("all")
+    plt.rcdefaults()
+    yield
+    plt.close("all")
+    plt.rcdefaults()
 
 
 def test_figsize_scaling():
@@ -27,6 +38,22 @@ def test_figsize_scaling():
     assert height == width * 0.5
 
 
+@pytest.mark.parametrize(
+    ("args", "error"),
+    [
+        ((0,), ValueError),
+        ((-1,), ValueError),
+        ((float("inf"),), ValueError),
+        (("half",), TypeError),
+        ((True,), TypeError),
+        ((1, 0), ValueError),
+    ],
+)
+def test_figsize_rejects_invalid_values(args, error):
+    with pytest.raises(error):
+        minimalist.figsize(*args)
+
+
 def test_get_cmap():
     diverging = minimalist.get_cmap("diverging")
     assert diverging.name == "pride"
@@ -35,6 +62,7 @@ def test_get_cmap():
     qualitative = minimalist.get_cmap("qualitative")
     assert isinstance(qualitative, list)
     assert qualitative == minimalist.BASE_COLORS
+    assert qualitative is not minimalist.QUALITATIVE_COLORS
 
     # Test custom minimalists maps are returned
     mini = minimalist.get_cmap("minimalist")
@@ -42,6 +70,22 @@ def test_get_cmap():
 
     mini_r = minimalist.get_cmap("minimalist_r")
     assert isinstance(mini_r, LinearSegmentedColormap)
+
+
+def test_pride_colormap_has_deterministic_fallback(monkeypatch):
+    monkeypatch.setattr(minimalist, "sc", None)
+
+    fallback = minimalist._make_pride_cmap()
+
+    assert fallback.name == "pride"
+    assert np.allclose(fallback(0), minimalist._BASE_CMAP(0))
+    assert np.allclose(fallback(1), minimalist._BASE_CMAP(1))
+
+
+def test_style_files_are_packaged():
+    styles = files("minimalist").joinpath("styles")
+    assert styles.joinpath("white.mplstyle").is_file()
+    assert styles.joinpath("black.mplstyle").is_file()
 
 
 @pytest.mark.filterwarnings("ignore::UserWarning")
@@ -94,9 +138,38 @@ def test_default_style_is_white():
     assert plt.rcParams["text.color"] == "black"
 
 
+def test_styles_can_be_switched_reliably():
+    minimalist.use_style("black")
+    assert plt.rcParams["figure.facecolor"] == "black"
+
+    minimalist.use_style("white")
+    assert plt.rcParams["figure.facecolor"] == "white"
+    assert plt.rcParams["text.color"] == "black"
+
+
 def test_unknown_style_lists_available_styles():
     with pytest.raises(ValueError, match="Available: 'white', 'black'"):
         minimalist.use_style("science")
+
+
+def test_style_name_cannot_escape_style_directory():
+    with pytest.raises(ValueError, match="Unknown style"):
+        minimalist.use_style("../black")
+
+
+def test_marker_gap_default_must_be_boolean():
+    with pytest.raises(TypeError, match="boolean"):
+        minimalist.enable_errorbar_marker_gap("yes")
+
+
+def test_color_legend_text_matches_line_colors():
+    _, ax = plt.subplots()
+    ax.plot([0, 1], [0, 1], color="red", label="red series")
+    ax.legend()
+
+    minimalist.color_legend_text(ax)
+
+    assert ax.get_legend().get_texts()[0].get_color() == "red"
 
 
 def _errorbar_center_rgb(marker_gap=None):

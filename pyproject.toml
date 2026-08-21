@@ -4,11 +4,11 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minimalist"
-version = "2.1.0"
+version = "3.0.0"
 description = "A clean matplotlib style package for scientific figures"
 readme = "README.md"
 license = {text = "MIT"}
-requires-python = ">=3.8"
+requires-python = ">=3.10"
 authors = [
     {name = "Suraj Sahu"},
 ]
@@ -24,25 +24,25 @@ classifiers = [
     "Intended Audience :: Science/Research",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Scientific/Engineering :: Visualization",
 ]
 dependencies = [
-    "matplotlib>=3.5.0",
-    "numpy>=1.20.0",
-    "scicomap>=1.1.1; python_version >= '3.10'",
+    "matplotlib>=3.7.0",
+    "numpy>=1.23.0",
+    "scicomap>=1.1.1",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "pytest>=6.0",
-    "black",
-    "ruff",
+    "black>=24.0,<27",
+    "build>=1.2,<2",
+    "pytest>=8.0,<10",
+    "ruff>=0.16,<1",
 ]
 
 [project.urls]
@@ -58,8 +58,12 @@ minimalist = ["styles/*.mplstyle"]
 
 [tool.black]
 line-length = 100
-target-version = ["py38"]
+target-version = ["py310"]
 
 [tool.ruff]
 line-length = 100
-target-version = "py38"
+target-version = "py310"
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-config --strict-markers"
+testpaths = ["tests"]
