@@ -1,54 +1,126 @@
-## Plot Styles 
+<div align="center">
 
-This repository contains Matplotlib style packages:
+# 🧪 Minimalist
+### A clean, production-grade Matplotlib style for scientific figures.
 
-- `packages/minimalist`: A minimalist Matplotlib style for scientific figures with curated color palettes.
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+[![CI](https://img.shields.io/github/actions/workflow/status/surajinacademia/Matplolib-Minimalist-Theme/ci.yml?branch=main&style=for-the-badge&logo=github)](https://github.com/surajinacademia/Matplolib-Minimalist-Theme/actions)
 
-### Quick Start (development install)
+[Features](#-features) • [Installation](#-installation) • [Quick Start](#-quick-start) • [Visual Demos](#-visual-demos) • [Development](#-development)
 
-From the repo root, install any package in editable mode:
+</div>
+
+---
+
+## ✨ Features
+
+- **🏛️ White and Black Styles**: Clean, publication-ready defaults for light and dark backgrounds.
+- **🎨 Modern Colormaps**:
+    - **Diverging**: `pride` (via `scicomap`)
+    - **Sequential**: `inferno`
+    - **Qualitative**: Custom `BASE_COLORS`
+- **⬜ Square Plots**: Enforces square aspect ratios by default for professional consistency.
+- **🔡 Typography**: Integrated **CMU Sans Serif** with Computer Modern math notation and 8 pt publication text defaults (no LaTeX required).
+- **📏 Perfect Sizing**: Figure width constants based on standard LaTeX article text width (510pt).
+
+---
+
+## 🖼️ Visual Demos
+
+<p align="center">
+  <img src="assets/demo_combined.png" width="100%" alt="Minimalist Style Demo">
+</p>
+
+---
+
+## 🚀 Installation
 
 ```bash
-pip install -e packages/minimalist
-# Legacy package (optional)
-pip install -e packages/minimalist/legacy/minimalist_rdbu
-pip install -e packages/scienceplots
+# Clone the repository
+git clone https://github.com/surajinacademia/Matplolib-Minimalist-Theme.git
+cd Matplolib-Minimalist-Theme/packages/minimalist
+
+# Install in editable mode
+pip install -e .
 ```
 
-### What's configured by default
-- CMU Sans Serif font with Computer Modern math (no LaTeX required)
-- Transparent figure/axes backgrounds for easy embedding
-- Explicit black text, labels, ticks, and edges
-- Thin lines (0.5pt), small markers, capsize 1.0
-- Minus sign warnings suppressed via `axes.unicode_minus: False`
+---
 
-### Usage
+## 🛠️ Quick Start
 
 ```python
-import matplotlib.pyplot as plt
 import minimalist
+import matplotlib.pyplot as plt
+import numpy as np
 
-minimalist.use_style('science')
+# Apply the default white style
+minimalist.use_style('white')
 
-fig, ax = plt.subplots(figsize=(minimalist.FW_2, minimalist.FW_3))
-ax.plot([1, 2, 3], [1, 4, 9])
+# Or use the black-background style
+# minimalist.use_style('black')
+
+# Create a square figure using the width constants
+fig, ax = plt.subplots(figsize=minimalist.figsize(0.5))
+
+# Plot data
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+ax.plot(x, y, label='Data')
+
+ax.set_xlabel(r'$x$')
+ax.set_ylabel(r'$\sin(x)$')
+ax.legend()
 plt.show()
 ```
 
-### Figure Width Constants
+---
+
+## 📖 Professional API
+
+### 🌈 Colormaps
+```python
+# Recommended way to get colormaps
+diverging_cmap = minimalist.get_cmap('diverging')  # 'pride'
+sequential_cmap = minimalist.get_cmap('sequential')  # 'inferno'
+colors = minimalist.get_cmap('qualitative')  # List of HEX colors
+```
+
+### 📏 Figure Sizing
+Based on standard LaTeX article text width (510pt = 7.06 inches).
+By default, `figsize()` returns a **square** plot.
 
 | Constant | Value | Description |
 |----------|-------|-------------|
 | `FW` | 7.06" | Full text width |
-| `FW_2` | 3.53" | Half width |
-| `FW_3` | 2.36" | Third width |
+| `FW_2` | 3.53" | Half width (for 2-column layouts) |
+| `FW_3` | 2.36" | Third width (for 3-column layouts) |
 | `FW_4` | 1.77" | Quarter width |
 
-### Repository Layout
+---
 
-```
-packages/
-  minimalist
+## 🏗️ Development
+
+This package uses a professional `src` layout and standard tooling.
+
+### Tooling
+- **⚙️ Testing**: `pytest`
+- **🔍 Linting**: `ruff`
+- **✨ Formatting**: `black`
+
+### Common Commands
+A `Makefile` is provided for convenience:
+
+```bash
+make install    # Install with development dependencies
+make test       # Run the test suite
+make lint       # Check for linting issues
+make format     # Auto-format the codebase
+make build      # Build the wheel and source distribution
 ```
 
-Each package is a standalone Python distribution with its own README and setup metadata.
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) for details.

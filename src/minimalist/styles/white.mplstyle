@@ -1,0 +1,88 @@
+# Minimalist white style
+# Clean scientific style with tick marks on all sides
+# Uses CMU Sans Serif font with Computer Modern math
+
+# =============================================================================
+# Figure
+# =============================================================================
+figure.figsize: 3.53, 3.53
+figure.dpi: 300
+figure.facecolor: white
+savefig.format: pdf
+savefig.facecolor: white
+savefig.transparent: False
+
+# =============================================================================
+# Font
+# =============================================================================
+text.usetex: False
+text.color: black
+font.family: CMU Sans Serif
+mathtext.fontset: cm
+axes.unicode_minus: False
+font.size: 8
+figure.titlesize: 8
+axes.formatter.use_mathtext: True
+
+# =============================================================================
+# Axes (all 4 spines visible)
+# =============================================================================
+axes.linewidth: 0.65
+axes.facecolor: white
+axes.edgecolor: black
+axes.labelcolor: black
+axes.spines.top: True
+axes.spines.right: True
+axes.spines.bottom: True
+axes.spines.left: True
+axes.labelsize: 8
+axes.titlesize: 8
+
+# =============================================================================
+# Ticks
+# =============================================================================
+xtick.bottom: True
+xtick.top: True
+ytick.left: True
+ytick.right: True
+xtick.direction: in
+ytick.direction: in
+xtick.minor.visible: False
+ytick.minor.visible: False
+xtick.major.size: 1.5
+ytick.major.size: 1.5
+xtick.major.width: 0.35
+ytick.major.width: 0.35
+xtick.labelsize: 8
+ytick.labelsize: 8
+xtick.color: black
+ytick.color: black
+
+# =============================================================================
+# Lines
+# =============================================================================
+lines.linewidth: 1.0
+lines.marker: none
+lines.markersize: 2
+lines.solid_capstyle: round
+
+# =============================================================================
+# Legend
+# =============================================================================
+legend.frameon: False
+legend.fontsize: 8
+legend.title_fontsize: 8
+legend.labelspacing: 0.5
+legend.handletextpad: 0.5
+legend.handlelength: 0.5
+
+# =============================================================================
+# Images/Colormaps
+# =============================================================================
+image.cmap: pride
+
+# =============================================================================
+# Color cycle (BASE_COLORS)
+# =============================================================================
+# Hex equivalents: #AB3019 #FE7002 #F4B43E #86B4C4 #00768C #003547 (hash breaks mplstyle parser)
+axes.prop_cycle: cycler(color=[(0.671, 0.188, 0.098), (0.996, 0.439, 0.008), (0.957, 0.706, 0.243), (0.525, 0.706, 0.769), (0, 0.463, 0.549), (0, 0.208, 0.278)])

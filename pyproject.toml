@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "minimalist"
-version = "2.0.0"
+version = "2.1.0"
 description = "A clean matplotlib style package for scientific figures"
 readme = "README.md"
 license = {text = "MIT"}
@@ -35,6 +35,7 @@ classifiers = [
 dependencies = [
     "matplotlib>=3.5.0",
     "numpy>=1.20.0",
+    "scicomap>=1.0.0",
 ]
 
 [project.optional-dependencies]
@@ -49,7 +50,7 @@ Homepage = "https://github.com/surajinacademia/Matplolib-Minimalist-Theme"
 Repository = "https://github.com/surajinacademia/Matplolib-Minimalist-Theme"
 
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]
 include = ["minimalist*"]
 
 [tool.setuptools.package-data]

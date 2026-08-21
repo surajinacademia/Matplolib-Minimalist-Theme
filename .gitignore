@@ -63,6 +63,5 @@ ENV/
 # macOS
 .DS_Store
 
-# Demo output files
-demo_*.pdf
-demo_*.png
+# Local output
+plots/

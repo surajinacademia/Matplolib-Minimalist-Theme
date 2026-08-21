@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- **Breaking**: Replaced the `science` style with explicit `white` and `black` styles.
+- `use_style()` now defaults to `white`; `black` preserves the black-background appearance.
+- Both styles use 8 pt typography for base text, figure titles, axis titles, axis labels, tick labels, legends, and legend titles.
+
+### Fixed
+- Declared `scicomap` as a runtime dependency.
+
 ## [2.0.0] - 2025-02-21
 
 ### Changed
