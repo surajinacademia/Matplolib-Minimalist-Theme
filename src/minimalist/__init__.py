@@ -21,8 +21,12 @@ import os
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-import scicomap as sc
 from matplotlib.colors import LinearSegmentedColormap
+
+try:
+    import scicomap as sc
+except (AttributeError, ImportError, TypeError):
+    sc = None
 
 __version__ = "2.1.0"
 __author__ = "Suraj Sahu"
@@ -55,11 +59,17 @@ SEQUENTIAL_CMAP = "inferno"
 _BASE_CMAP = LinearSegmentedColormap.from_list("minimalist", BASE_COLORS)
 _BASE_CMAP_R = LinearSegmentedColormap.from_list("minimalist_r", BASE_COLORS[::-1])
 
-# Register colormaps with matplotlib
-try:
+# Register colormaps with matplotlib. Older Python versions use a local
+# warm-to-cool fallback because compatible scicomap releases are unavailable.
+if sc is None:
+    pride_cmap = LinearSegmentedColormap.from_list("pride", BASE_COLORS)
+else:
     pride_cmap = sc.ScicoDiverging(cmap="pride").get_mpl_color_map()
+
+try:
     plt.colormaps.register(cmap=pride_cmap, name="pride")
 except ValueError:
+    # Already registered
     pass
 
 try:

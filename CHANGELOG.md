@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Declared `scicomap` as a runtime dependency.
-- Kept Python 3.8–3.9 compatible with the NumPy range supported by `scicomap` 1.0.
+- Kept Python 3.8–3.9 compatible by using the built-in warm–cool palette when a compatible `scicomap` release is unavailable.
 - Avoided Matplotlib's private style-registry API, which was removed in newer releases.
 
 ## [2.0.0] - 2025-02-21

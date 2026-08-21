@@ -28,6 +28,9 @@ def test_figsize_scaling():
 
 
 def test_get_cmap():
+    diverging = minimalist.get_cmap("diverging")
+    assert diverging.name == "pride"
+
     # Test qualitative returns list
     qualitative = minimalist.get_cmap("qualitative")
     assert isinstance(qualitative, list)
