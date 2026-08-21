@@ -400,16 +400,6 @@ FILL_ALPHA = 0.1
 
 
 # =============================================================================
-# Register styles with matplotlib
-# =============================================================================
-_styles_path = os.path.join(os.path.dirname(__file__), "styles")
-if os.path.isdir(_styles_path):
-    _stylesheets = plt.style.core.read_style_directory(_styles_path)
-    plt.style.core.update_nested_dict(plt.style.library, _stylesheets)
-    plt.style.core.available[:] = sorted(plt.style.library.keys())
-
-
-# =============================================================================
 # Public API
 # =============================================================================
 __all__ = [
